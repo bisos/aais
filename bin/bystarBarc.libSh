@@ -1,0 +1,10 @@
+#!/bin/osmtKsh
+#!/bin/osmtKsh
+
+vis_bystarBarcHelp () {
+  cat  << _EOF_
+  See bystarRoadmap
+
+_EOF_
+  return 0
+}

@@ -1,0 +1,425 @@
+#!/bin/osmtKsh
+#!/bin/osmtKsh
+
+typeset RcsId="$Id: bystarInfoBase.libSh,v 1.1.1.1 2016-06-08 23:49:51 lsipusr Exp $"
+
+function vis_bystarInfoBaseLibShDoc {
+ cat  << _EOF_
+
+See ./bystarRoadmap.sh for context.
+
+Most bystar tools will be using this library.
+ 
+========= bystarInfoBaseAdmin.sh
+
+-p acct=xxx -e "find Host"-i findBacs
+-p acct=xxx -i findMirror
+-p acct=xxx -i findBackups
+-p acct=xxx -i showProfile
+-p acct=xxx -i findNsp
+
+-p bap=fileNameUnreg  -i register
+-p bap=fileNameUnreg  -i registerAndActivate
+
+-p firstName=xxx -i findAcct
+-p bynumber=xxx -i findAcct
+
+=========       
+
+bystarIbRoot=/libre/ByStar
+
+bystarIbBacsRoot=/libre/ByStar/BACS
+   
+bystarIbBueRoot=/libre/ByStar/BUE
+
+#/libre/ByStar/BAP/ByName/sa/20000
+bystarIbBapRoot=/libre/ByStar/BAP
+
+# /libre/ByStar/NUMBER
+bystarIbNumberRoot="/libre/ByStar/NUMBER"
+
+#/libre/ByStar/DOMAIN/net/byname/banan/1/mohsen
+# This is how the qualifier gets selected
+bystarIbDomainRoot=/libre/ByStar/DOMAIN/net/byname/banan/1/mohsen
+
+bystarIbDnsZoneRoot=/libre/ByStar/DnsZone/net/byname/contentServers
+
+# ./acct -- Not CVSe
+# /libre/ByStar/acct/orig/bacs0001/sa-20000/
+bystarIbAcctRoot=/libre/ByStar/acct
+bystarIbAcctOrigRoot=/libre/ByStar/acct/orig
+bystarIbAcctMirrorRoot=/libre/ByStar/acct/mirror
+bystarIbAcctBackupRoot=/libre/ByStar/acct/backup
+
+# ./server -- Not CVSed
+bystarIbServerRoot=/libre/ByStar/server
+bystarIbServerMirrorRoot=/libre/ByStar/server/mirror
+bystarIbServerBackupRoot=/libre/ByStar/server/backup
+
+_EOF_
+}
+
+
+function bystarAcctParamsPrep {
+    EH_assert [[ $# -eq 0 ]]
+    EH_assert [[ "${bystarUid}_" != "MANDATORY_" ]]
+
+    #bystarBagpLoad 2> /dev/null
+
+  opDoRet bystarAcctAnalyze ${bystarUid} 2> /dev/null
+
+  opAcctInfoGet ${bystarUid} 2> /dev/null
+
+  bystarDomainFormsPrep 2> /dev/null
+
+  siteFqdn="www.${bystarDomFormTld}"
+}
+
+bystarIbRoot="/libre/ByStar/InfoBase"
+
+bystarIbHostRoot="/libre/ByStar/InfoBase/HOST/nedaPlus"
+
+#/libre/ByStar/BAP/ByName/sa/20000
+bystarIbBapRoot=/libre/ByStar/BAP
+
+# /libre/ByStar/NUMBER
+bystarIbNumberRoot="/libre/ByStar/NUMBER"
+
+#/libre/ByStar/DOMAIN/net/byname/banan/1/mohsen
+# This is how the qualifier gets selected
+bystarIbDomainRoot="/libre/ByStar/InfoBase/DOMAINS/net/byname/banan/1/mohsen"
+
+bystarIbDnsZoneRoot=/libre/ByStar/DnsZone/net/byname/contentServers
+
+# ./acct -- Not CVSe
+# /libre/ByStar/acct/orig/bacs0001/sa-20000/
+bystarIbAcctRoot=/libre/ByStar/acct
+bystarIbAcctOrigRoot=/libre/ByStar/acct/orig
+bystarIbAcctMirrorRoot=/libre/ByStar/acct/mirror
+bystarIbAcctBackupRoot=/libre/ByStar/acct/backup
+
+# ./server -- Not CVSed
+bystarIbServerRoot=/libre/ByStar/server
+bystarIbServerMirrorRoot=/libre/ByStar/server/mirror
+bystarIbServerBackupRoot=/libre/ByStar/server/backup
+
+
+bystarIbParamSpecific_BYNAME_COMMITTED () {
+    bystarAcctTypePrefix="sa"
+
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byName/sa"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYNAME/sa"	
+    fi
+}
+
+bystarIbParamSpecific_BYNAME_TRIAL () {
+    bystarAcctTypePrefix="ua"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byName/ua"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYNAME/ua"
+    fi
+}
+
+bystarIbParamSpecific_BYMEMORY_COMMITTED () {
+    bystarAcctTypePrefix="ma"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byMemory/ma"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYMEMORY/ma"
+    fi
+}
+
+bystarIbParamSpecific_BYMEMORY_TRIAL () {
+    bystarAcctTypePrefix="mu"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byMemory/mu"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYMEMORY/mu"
+    fi
+}
+
+
+bystarIbParamSpecific_BYALIAS_COMMITTED () {
+    bystarAcctTypePrefix="aa"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byAlias/aa"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYALIAS/aa"
+    fi
+}
+
+bystarIbParamSpecific_BYALIAS_TRIAL () {
+    bystarAcctTypePrefix="au"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byAlias/au"
+    else
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYALIAS/au"
+    fi
+}
+
+bystarIbParamSpecific_BYSMB_DEFAULT () {
+    bystarAcctTypePrefix="ea"
+    if isDisposableRegisterUid ; then
+        bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/bySmb/ea"
+    else
+	bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYSMB/ea"
+    fi
+}
+
+bystarIbParamSpecific_BCA_DEFAULT () {
+    bystarAcctTypePrefix="ca"
+    bystarIbAcctTypeRBAEBase="BystarControlledAccount"
+}
+
+bystarIbParamSpecific_DEFAULT_DEFAULT () {
+   ANT_raw "Missing ${bystarServiceType}_${bystarServiceSupportType}"
+   return 101
+}
+
+bystarIbParamSpecific () {
+    bystarServiceSupportHookRun bystarIbParamSpecific $*
+}
+
+
+
+    RbaeDriveParams () {
+	EH_assert [[ $# -eq 0 ]]
+	EH_assert [[ "${cp_ServiceType}_" != "_" ]]
+	EH_assert [[ "${cp_ServiceSupportType}_" != "_" ]]
+
+        bystarServiceSupportHookParamsSet ${cp_ServiceType} ${cp_ServiceSupportType}
+
+	bystarServiceSupportHookRun RbaeDriveParams
+    }
+
+    RbaeDriveParams_BYNAME_COMMITTED () {
+        bynameFactoryBaseDomain="byname.net"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
+	RbaeDriveParamsBynameCommon
+    }
+
+    RbaeDriveParams_BYNAME_TRIAL () {
+        bynameFactoryBaseDomain="byname.com"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
+	RbaeDriveParamsBynameCommon
+    }
+
+    RbaeDriveParamsBynameCommon() {
+	factoryBaseDomain=${bynameFactoryBaseDomain}
+	acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bynameFactoryBaseDomain}"
+	acctPloneBaseDomain="${cp_FirstName}.${cp_LastName}.${cp_nameSelector}.${bynameFactoryBaseDomain}"
+	acctFactoryBaseDomain="${cp_acctNu}.${bynameFactoryBaseDomain}"
+    }
+
+    RbaeDriveParams_BYALIAS_COMMITTED () {
+        byaliasFactoryBaseDomain="byalias.net"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
+	RbaeDriveParamsByaliasCommon
+    }
+
+    RbaeDriveParams_BYALIAS_TRIAL () {
+        byaliasFactoryBaseDomain="byalias.com"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
+	RbaeDriveParamsByaliasCommon
+    }
+
+    RbaeDriveParamsByaliasCommon() {
+	factoryBaseDomain=${byaliasFactoryBaseDomain}
+	acctMainBaseDomain="${cp_AliasName}.${byaliasFactoryBaseDomain}"
+	acctPloneBaseDomain="${acctMainBaseDomain}"
+	acctFactoryBaseDomain="${cp_acctNu}.${byaliasFactoryBaseDomain}"
+    }
+
+    RbaeDriveParams_BYMEMORY_COMMITTED () {
+        bymemoryFactoryBaseDomain="bymemory.net"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
+	RbaeDriveParamsBymemoryCommon
+    }
+
+    RbaeDriveParams_BYMEMORY_TRIAL () {
+        bymemoryFactoryBaseDomain="bymemory.com"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
+	RbaeDriveParamsBymemoryCommon
+    }
+
+    RbaeDriveParamsBymemoryCommon() {
+	factoryBaseDomain=${bymemoryFactoryBaseDomain}
+	acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bymemoryFactoryBaseDomain}"
+	acctPloneBaseDomain="${acctMainBaseDomain}"
+	acctFactoryBaseDomain="${cp_acctNu}.${bymemoryFactoryBaseDomain}"
+    }
+
+    RbaeDriveParams_BYSMB_COMMITTED () {
+	case ${cp_Domain1} in
+	    "org")
+		bysmbFactoryBaseDomain="libresite.org"
+		;;
+	    "net")
+		bysmbFactoryBaseDomain="bysmb.net"
+		;;
+	    "com")
+		bysmbFactoryBaseDomain="bysmb.com"
+		;;
+	    "intra")
+		bysmbFactoryBaseDomain="intra"
+		;;
+	    *)
+		EH_problem "${cp_Domain1} Not Supported"
+		;;
+	esac
+
+	factoryBaseDomain=${bysmbFactoryBaseDomain}
+	acctFactoryBaseDomain="${cp_Domain2}.${bysmbFactoryBaseDomain}"
+	acctMainBaseDomain="${cp_Domain2}.${cp_Domain1}"
+	acctPloneBaseDomain="www.${acctMainBaseDomain}"
+        acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
+    }
+
+    RbaeDriveParams_BYSMB_TRIAL () {
+	RbaeDriveParams_BYSMB_COMMITTED
+    }
+
+
+
+#
+# JUNK YARD
+#
+
+
+function bi_FileParamsGet {
+  EH_assert [[ $# -eq 1 ]]
+
+  fileParamsBase=$1 
+
+  EH_assert [[ -d ${fileParamsBase} ]]
+
+  opDoExit cd ${fileParamsBase}
+
+  bi_BacsId=$( cat BacsId_ )
+  bi_BoxName=$( cat BoxName_ )
+
+  bi_ServerName=$( cat ServerName_ )
+  bi_ServerFamily=$( cat ServerFamily_ )
+
+  bi_ServerIpAddr1=$( cat ServerIpAddr1 )
+
+  bi_SiteName=$( cat SiteName_ )
+}
+
+function bi_FileParamsShow {
+  EH_assert [[ $# -eq 1 ]]
+
+  fileParamsBase=$1 
+
+  EH_assert [[ -d ${fileParamsBase} ]]
+
+  bi_FileParamsGet ${fileParamsBase}
+
+  cat  << _EOF_
+bi_BacsId=${bi_BacsId}
+bi_BoxName=${bi_BoxName}
+bi_ServerName=${bi_ServerName}
+bi_ServerFamily=${bi_ServerFamily}
+bi_ServerIpAddr1=${bi_ServerIpAddr1}
+bi_SiteName=${bi_SiteName}
+_EOF_
+}
+
+function isDirsProcessor {
+  #set -x
+  if [ "${dirsList}_" == "_" ] ; then
+    return 1
+  else 
+    return 0
+  fi
+}
+
+
+
+function bystarPathAnalyze {
+
+ baseDir=$1
+
+    cd $baseDir
+    baseDir=`pwd`
+
+ typeset bystarBaseFound="FALSE"
+ bystarBaseDir="/"
+
+ pathToArray ${baseDir}
+
+ set ${pathArray[@]}
+
+ for thisElem in ${pathArray[@]} ; do
+   bystarBaseDir="${bystarBaseDir}${thisElem}/"
+   shift
+   if [[ "${thisElem}_" == "bystar_" ]] ; then
+      bystarBaseFound="TRUE"
+      break
+   elif [[ "${thisElem}_" == "info_" ]] ; then
+      bystarBaseFound="TRUE"
+      break
+   fi
+ done
+
+ if [[ "${bystarBaseFound}_" != "TRUE_" ]] ; then 
+   return 1
+ fi
+
+ #echo ${bystarBaseDir}
+
+ # ASSERT that things are deep enough
+
+ bystarAttrGenPub=$1  # One of: lgcc, lgpc, lpxc
+
+ case ${bystarAttrGenPub} in 
+   "lgcc"|"lgpc"|"lpxc")
+			 doNothing
+			 ;;
+   "externalLimited"|"externalConfidential"|"externalLibre"|"externalPublic"|"mohsenConfidential")
+			 doNothing
+			 ;;
+   *)
+      EH_problem "Unknown bystarAttrGenPub: ${bystarAttrGenPub}"
+      return 1
+      ;;
+ esac
+
+ bystarAttrSource=$2   # One of: mohsen, neda, payk
+ 
+ if [[ -d ${bystarBaseDir}${bystarAttrGenPub}/${bystarAttrSource}/SOURCE-INFO ]] ; then
+   if [[ -f ${bystarBaseDir}${bystarAttrGenPub}/${bystarAttrSource}/SOURCE-INFO/bystarSourceInfo.sh ]] ; then
+     . ${bystarBaseDir}${bystarAttrGenPub}/${bystarAttrSource}/SOURCE-INFO/bystarSourceInfo.sh
+   else
+     EH_problem ${bystarBaseDir}${bystarAttrGenPub}/${bystarAttrSource}/SOURCE-INFO/bystarSourceInfo.sh
+   fi
+ else
+   EH_problem ${bystarBaseDir}${bystarAttrGenPub}/${bystarAttrSource}/SOURCE-INFO
+ fi
+
+ if [[ "${pathArray[0]}_" == "info_" ]] ; then
+    bystarAttrPermanence=repub
+ else
+   bystarAttrPermanence=$3  # one of draft, permanent, record, repub
+
+   case ${bystarAttrPermanence} in 
+     "draft"|"permanent"|"record"|"repub")
+					   doNothing
+					   ;;
+     *)
+	EH_problem "Unknown bystarAttrPermanence: ${bystarAttrPermanence}"
+	return 1
+	;;
+   esac
+ fi
+
+ bystarAttrGroup=$4
+
+ shift; shift; shift; shift
+ # rest all together becomes 
+ bystarAttrHomeRelBase=$*
+
+}
