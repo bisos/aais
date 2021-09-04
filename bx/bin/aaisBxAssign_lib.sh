@@ -419,7 +419,6 @@ _EOF_
 }       
 
 
-
 function vis_aabis_assignUpdate_atNu {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
@@ -428,8 +427,9 @@ _EOF_
    EH_assert [[ $# -eq 1 ]]
    local aabisNu="$1"
 
-   EH_assert [ ! -z "${serviceType}" ]
    EH_assert [ ! -z "${fpsBase}" ]
+
+   local serviceType="$(lpDo fileParamManage.py -i fileParamRead "${fpsBase}" serviceType)"
 
    local assignsBase=$(vis_aabis_registrarAssignBaseObtain)
    EH_assert [ ! -z "${assignsBase}" ]
@@ -460,6 +460,21 @@ _EOF_
            ANT_cooked "aabisId=${aabisId} -- No action taken"
        fi
    fi
+
+   local aabisBpoId=pmi_$( vis_aabis_withNuGetId ${aabisNu} )
+   local stored_aabisBpoId=$( fileParamManage.py -i fileParamRead  ${aabisBase} aabisBpoId )
+
+   if [ -z "${stored_aabisBpoId}" ] ; then
+       lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisBpoId "${aabisBpoId}"
+   else
+       if [ "${aabisBpoId}" != "${stored_aabisBpoId}" ] ; then
+           EH_problem "Expected ${aabisBpoId} -- got ${stored_aabisBpoId} -- Updating it."
+           lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisBpoId "${aabisBpoId}"
+       else
+           ANT_cooked "aabisBpoId=${aabisBpoId} -- No action taken"
+       fi
+   fi
+
 
    local stored_aabisNu=$( fileParamManage.py -i fileParamRead  ${aabisBase} aabisNu )
 
@@ -495,7 +510,7 @@ _EOF_
    local result=""
 
    case "${paramName}" in
-       fpsBase|serviceType|aabisNu|aabisId)
+       fpsBase|serviceType|aabisNu|aabisId|aabisBpoId)
            result=$(lpDo fileParamManage.py -i fileParamRead ${assignBase} "${paramName}")
            EH_assert [ ! -z "${result}" ]
            ;;
@@ -550,6 +565,18 @@ _EOF_
    local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
    lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
+
+function vis_aabis_withAssignBaseGet_aabisBpoId {
+   G_funcEntry
+   function describeF {  G_funcEntryShow; cat  << _EOF_
+_EOF_
+                      }
+   EH_assert [[ $# -eq 1 ]]
+   local assignBase="$1"
+   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
+   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+}
+
 
 function vis_aabis_withAssignBaseReport {
    G_funcEntry

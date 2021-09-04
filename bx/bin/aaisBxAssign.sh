@@ -111,7 +111,9 @@ function vis_examples {
     # local oneRealIndiv=$(cat /bxo/usg/bystar/bpos/real/realIndiv.bpoFp/value)
 
     local oneFpsBase=$(aaisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
-    
+    local oneAssignBase=$(vis_aabis_forFpsBaseFindAssignBase ${oneFpsBase})
+
+
     visLibExamplesOutput ${G_myName}
     # ${doLibExamples} 
     cat  << _EOF_
@@ -133,7 +135,7 @@ ${G_myName} ${extraInfo} -i fromContainerBaseGetContainerNu "${containerBase}"
 $( examplesSeperatorChapter "SET -- Assignment -- Primary Commands" )
 ${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBase
 ${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBase # FORCED
-${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBaseAndPush  # PRIMARY COMMAND
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBaseAndPush  # ASSIGN PRIMARY COMMAND
 ${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBaseAndPush  # FORCED PRIMARY COMMAND
 ${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_assignUpdate_atNu 100001 # Internal
 $( examplesSeperatorChapter "UNSET -- Container Box Un Assignment" )
@@ -144,14 +146,15 @@ echo aabisBase | bx-gitRepos -i addCommitPush all
 ${G_myName} ${extraInfo} -i aabos_ssignBasePull
 $( examplesSeperatorChapter "GET -- Container Nu" )
 ${G_myName} ${extraInfo} -p serviceType=ByName -i aabis_assignNuGetNext
-${G_myName} ${extraInfo} -i aabis_forFpsBaseFindAssignBase ${oneFpsBase}
-${G_myName} -i aabis_withAssignBaseReport /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001
+${G_myName} ${extraInfo} -i aabis_forFpsBaseFindAssignBase ${oneFpsBase}  # INFO PRIMARY COMMAND
+${G_myName} -i aabis_withAssignBaseReport ${oneAssignBase} # INFO PRIMARY COMMAND -- FPs-readDeep
 $( examplesSeperatorChapter "GET -- Params" )
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_fpsBase /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_serviceType /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisNu /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisId /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001
-${G_myName} ${extraInfo} -i aabis_withAssignBaseReadFileParam /bxo/r3/iso/pir_bystarRegistrar/assign/ByName/100001 fpsBase
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_fpsBase ${oneAssignBase}
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_serviceType ${oneAssignBase}
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisNu ${oneAssignBase}
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisId ${oneAssignBase}
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisBpoId ${oneAssignBase}
+${G_myName} ${extraInfo} -i aabis_withAssignBaseReadFileParam ${oneAssignBase} aabisBpoId
 _EOF_
 }
 

@@ -142,8 +142,9 @@ function vis_examples {
 
     local oneFpsBase=$(aaisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
 
-    fpsBase="${oneFpsBase}"
-    oneBxoId="$(vis_aabis_assignAndGetBxoId)"
+    local fpsBase="${oneFpsBase}"
+    local oneBxoId="$(vis_aabis_assignAndGetBxoId)"
+    local oneAssignBase=$(vis_aabis_forFpsBaseFindAssignBase ${oneFpsBase})
 
 
     function repoBaseCreateAndPushExamples {
@@ -183,6 +184,7 @@ ${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_assignAndBasicBxoReal
 ${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_assignAndFullRealize  # FULL ACTION -- PRIMARY COMMAND
 $( examplesSeperatorChapter "Obtain BpoId" )
 ${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_assignAndGetBxoId
+${G_myName} ${extraInfo} -i aabis_withAssignBaseGetBxoId ${oneAssignBase}
 _EOF_
 
     cat  << _EOF_

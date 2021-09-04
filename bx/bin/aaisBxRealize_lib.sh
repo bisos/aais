@@ -153,7 +153,7 @@ _EOF_
    local aabisAssignBase=$1
    EH_assert [ -d ${aabisAssignBase} ]
 
-   echo "pmi_$(vis_aabis_withAssignBaseGet_aabisId ${aabisAssignBase})"
+   echo "$(vis_aabis_withAssignBaseGet_aabisBpoId ${aabisAssignBase})"
 }
 
 function vis_aabis_withAssignBaseBasicBxoRealize {

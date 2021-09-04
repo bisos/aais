@@ -178,7 +178,7 @@ _EOF_
 }
 
 
-function vis_aabis_withAssignBaseGetBxoId {
+function vis_aabis_withAssignBaseGetBxoId%% {
         G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** \$1 is bxoRepoScope -- \$2 is path to siteAabisAssignBase 
@@ -190,7 +190,7 @@ _EOF_
    local aabisAssignBase=$1
    EH_assert [ -d ${aabisAssignBase} ]
 
-   echo "pmi_$(vis_aabis_withAssignBaseGet_aabisId ${aabisAssignBase})"
+   echo "$(vis_aabis_withAssignBaseGet_aabisBpoId ${aabisAssignBase})"
 }
 
 function vis_aabis_withAssignBaseBasicBxoRealize {
@@ -207,7 +207,8 @@ _EOF_
 
    local bxoRealizationScope="full" # NOTYET
    
-   local aabisBxoId=$(vis_aabis_withAssignBaseGetBxoId "${aabisAssignBase}" )
+   #local aabisBxoId=$(vis_aabis_withAssignBaseGetBxoId "${aabisAssignBase}" )
+   local aabisBxoId=$(vis_aabis_withAssignBaseGet_aabisBpoId "${aabisAssignBase}")
    EH_assert [ ! -z "${aabisBxoId}" ]
 
    local parentBxoId=$(vis_aabis_withAssignBaseGet_correspondingBxo "${aabisAssignBase}")
