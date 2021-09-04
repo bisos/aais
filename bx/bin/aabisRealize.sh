@@ -100,8 +100,8 @@ _CommentEnd_
 
 . ${opBinBase}/siteNetworks_lib.sh
 
-. ${aaisBinBase}/aaisBxAssign_lib.sh
-. ${aaisBinBase}/aaisBxRealize_lib.sh
+. ${aabisBinBase}/aabisAssign_lib.sh
+. ${aabisBinBase}/aabisRealize_lib.sh
 
 # PRE parameters
 
@@ -140,7 +140,7 @@ function vis_examples {
 
     oneBxoRepoScope="basePrep"
 
-    local oneFpsBase=$(aaisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
+    local oneFpsBase=$(aabisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
 
     local fpsBase="${oneFpsBase}"
     local oneBxoId="$(vis_aabis_assignAndGetBxoId)"

@@ -78,7 +78,7 @@ _CommentEnd_
 
 . ${opBinBase}/box_lib.sh
 
-. ${aaisBinBase}/aaisBxAssign_lib.sh
+. ${aabisBinBase}/aabisAssign_lib.sh
 
 
 # PRE parameters
@@ -110,7 +110,7 @@ function vis_examples {
 
     # local oneRealIndiv=$(cat /bxo/usg/bystar/bpos/real/realIndiv.bpoFp/value)
 
-    local oneFpsBase=$(aaisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
+    local oneFpsBase=$(aabisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
     local oneAssignBase=$(vis_aabis_forFpsBaseFindAssignBase ${oneFpsBase})
 
 
