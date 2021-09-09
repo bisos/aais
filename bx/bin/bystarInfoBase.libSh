@@ -110,7 +110,7 @@ bystarIbParamSpecific_BYNAME_COMMITTED () {
     if isDisposableRegisterUid ; then
         bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/byName/sa"
     else
-        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYNAME/sa"	
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYNAME/sa"        
     fi
 }
 
@@ -165,7 +165,7 @@ bystarIbParamSpecific_BYSMB_DEFAULT () {
     if isDisposableRegisterUid ; then
         bystarIbAcctTypeRBAEBase="/libre/etc/bystar/infoBase/rbae/bySmb/ea"
     else
-	bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYSMB/ea"
+        bystarIbAcctTypeRBAEBase="/libre/ByStar/InfoBase/RBAE/BYSMB/ea"
     fi
 }
 
@@ -186,100 +186,100 @@ bystarIbParamSpecific () {
 
 
     RbaeDriveParams () {
-	EH_assert [[ $# -eq 0 ]]
-	EH_assert [[ "${cp_ServiceType}_" != "_" ]]
-	EH_assert [[ "${cp_ServiceSupportType}_" != "_" ]]
+        EH_assert [[ $# -eq 0 ]]
+        EH_assert [[ "${cp_ServiceType}_" != "_" ]]
+        EH_assert [[ "${cp_ServiceSupportType}_" != "_" ]]
 
         bystarServiceSupportHookParamsSet ${cp_ServiceType} ${cp_ServiceSupportType}
 
-	bystarServiceSupportHookRun RbaeDriveParams
+        bystarServiceSupportHookRun RbaeDriveParams
     }
 
     RbaeDriveParams_BYNAME_COMMITTED () {
         bynameFactoryBaseDomain="byname.net"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
-	RbaeDriveParamsBynameCommon
+        RbaeDriveParamsBynameCommon
     }
 
     RbaeDriveParams_BYNAME_TRIAL () {
         bynameFactoryBaseDomain="byname.com"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
-	RbaeDriveParamsBynameCommon
+        RbaeDriveParamsBynameCommon
     }
 
     RbaeDriveParamsBynameCommon() {
-	factoryBaseDomain=${bynameFactoryBaseDomain}
-	acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bynameFactoryBaseDomain}"
-	acctPloneBaseDomain="${cp_FirstName}.${cp_LastName}.${cp_nameSelector}.${bynameFactoryBaseDomain}"
-	acctFactoryBaseDomain="${cp_acctNu}.${bynameFactoryBaseDomain}"
+        factoryBaseDomain=${bynameFactoryBaseDomain}
+        acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bynameFactoryBaseDomain}"
+        acctPloneBaseDomain="${cp_FirstName}.${cp_LastName}.${cp_nameSelector}.${bynameFactoryBaseDomain}"
+        acctFactoryBaseDomain="${cp_acctNu}.${bynameFactoryBaseDomain}"
     }
 
     RbaeDriveParams_BYALIAS_COMMITTED () {
         byaliasFactoryBaseDomain="byalias.net"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
-	RbaeDriveParamsByaliasCommon
+        RbaeDriveParamsByaliasCommon
     }
 
     RbaeDriveParams_BYALIAS_TRIAL () {
         byaliasFactoryBaseDomain="byalias.com"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
-	RbaeDriveParamsByaliasCommon
+        RbaeDriveParamsByaliasCommon
     }
 
     RbaeDriveParamsByaliasCommon() {
-	factoryBaseDomain=${byaliasFactoryBaseDomain}
-	acctMainBaseDomain="${cp_AliasName}.${byaliasFactoryBaseDomain}"
-	acctPloneBaseDomain="${acctMainBaseDomain}"
-	acctFactoryBaseDomain="${cp_acctNu}.${byaliasFactoryBaseDomain}"
+        factoryBaseDomain=${byaliasFactoryBaseDomain}
+        acctMainBaseDomain="${cp_AliasName}.${byaliasFactoryBaseDomain}"
+        acctPloneBaseDomain="${acctMainBaseDomain}"
+        acctFactoryBaseDomain="${cp_acctNu}.${byaliasFactoryBaseDomain}"
     }
 
     RbaeDriveParams_BYMEMORY_COMMITTED () {
         bymemoryFactoryBaseDomain="bymemory.net"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
-	RbaeDriveParamsBymemoryCommon
+        RbaeDriveParamsBymemoryCommon
     }
 
     RbaeDriveParams_BYMEMORY_TRIAL () {
         bymemoryFactoryBaseDomain="bymemory.com"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.com"
-	RbaeDriveParamsBymemoryCommon
+        RbaeDriveParamsBymemoryCommon
     }
 
     RbaeDriveParamsBymemoryCommon() {
-	factoryBaseDomain=${bymemoryFactoryBaseDomain}
-	acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bymemoryFactoryBaseDomain}"
-	acctPloneBaseDomain="${acctMainBaseDomain}"
-	acctFactoryBaseDomain="${cp_acctNu}.${bymemoryFactoryBaseDomain}"
+        factoryBaseDomain=${bymemoryFactoryBaseDomain}
+        acctMainBaseDomain="${cp_FirstName}.${cp_nameSelector}.${cp_LastName}.${bymemoryFactoryBaseDomain}"
+        acctPloneBaseDomain="${acctMainBaseDomain}"
+        acctFactoryBaseDomain="${cp_acctNu}.${bymemoryFactoryBaseDomain}"
     }
 
     RbaeDriveParams_BYSMB_COMMITTED () {
-	case ${cp_Domain1} in
-	    "org")
-		bysmbFactoryBaseDomain="libresite.org"
-		;;
-	    "net")
-		bysmbFactoryBaseDomain="bysmb.net"
-		;;
-	    "com")
-		bysmbFactoryBaseDomain="bysmb.com"
-		;;
-	    "intra")
-		bysmbFactoryBaseDomain="intra"
-		;;
-	    *)
-		EH_problem "${cp_Domain1} Not Supported"
-		;;
-	esac
+        case ${cp_Domain1} in
+            "org")
+                bysmbFactoryBaseDomain="libresite.org"
+                ;;
+            "net")
+                bysmbFactoryBaseDomain="bysmb.net"
+                ;;
+            "com")
+                bysmbFactoryBaseDomain="bysmb.com"
+                ;;
+            "intra")
+                bysmbFactoryBaseDomain="intra"
+                ;;
+            *)
+                EH_problem "${cp_Domain1} Not Supported"
+                ;;
+        esac
 
-	factoryBaseDomain=${bysmbFactoryBaseDomain}
-	acctFactoryBaseDomain="${cp_Domain2}.${bysmbFactoryBaseDomain}"
-	acctMainBaseDomain="${cp_Domain2}.${cp_Domain1}"
-	acctPloneBaseDomain="www.${acctMainBaseDomain}"
+        factoryBaseDomain=${bysmbFactoryBaseDomain}
+        acctFactoryBaseDomain="${cp_Domain2}.${bysmbFactoryBaseDomain}"
+        acctMainBaseDomain="${cp_Domain2}.${cp_Domain1}"
+        acctPloneBaseDomain="www.${acctMainBaseDomain}"
         acctBynumberBaseDomain="${cp_acctNu}.bynumber.net"
     }
 
     RbaeDriveParams_BYSMB_TRIAL () {
-	RbaeDriveParams_BYSMB_COMMITTED
+        RbaeDriveParams_BYSMB_COMMITTED
     }
 
 
@@ -377,11 +377,11 @@ function bystarPathAnalyze {
 
  case ${bystarAttrGenPub} in 
    "lgcc"|"lgpc"|"lpxc")
-			 doNothing
-			 ;;
+                         doNothing
+                         ;;
    "externalLimited"|"externalConfidential"|"externalLibre"|"externalPublic"|"mohsenConfidential")
-			 doNothing
-			 ;;
+                         doNothing
+                         ;;
    *)
       EH_problem "Unknown bystarAttrGenPub: ${bystarAttrGenPub}"
       return 1
@@ -407,12 +407,12 @@ function bystarPathAnalyze {
 
    case ${bystarAttrPermanence} in 
      "draft"|"permanent"|"record"|"repub")
-					   doNothing
-					   ;;
+                                           doNothing
+                                           ;;
      *)
-	EH_problem "Unknown bystarAttrPermanence: ${bystarAttrPermanence}"
-	return 1
-	;;
+        EH_problem "Unknown bystarAttrPermanence: ${bystarAttrPermanence}"
+        return 1
+        ;;
    esac
  fi
 

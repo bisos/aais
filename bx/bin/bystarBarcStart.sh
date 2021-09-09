@@ -117,48 +117,48 @@ typeset -t none=""
 
 noArgsHook() {
     if [[ $# -eq 0 ]] ; then
-	vis_examples
-	return
+        vis_examples
+        return
     fi
 
     case "$1" in
-	bysmb)
-	    shift
-	    vis_examplesBysmb $@   
-	    ;;
-	bca)
-	    shift
-	    vis_examplesBca $@   
-	    ;;
-	byname)
-	    shift
-	    vis_examplesByname $@   
-	    ;;
-	byalias)
-	    shift
-	    vis_examplesByalias $@   
-	    ;;
-	bymemory)
-	    shift
-	    vis_examplesBymemory $@   
-	    ;;
-	bywhere)
-	    shift
-	    vis_examplesBywhere $@   
-	    ;;
-	all)
-	    shift
-	    vis_examplesBysmb $@   
-	    vis_examplesBca $@   
-	    vis_examplesByname $@   
-	    vis_examplesByalias $@   
-	    vis_examplesBymemory $@   
-	    vis_examplesBywhere $@   
-	    ;;
-	*)
-	    echo "Usage: $0 {byname|byalias|bymemory|bysmb|bywhere|all}"
-	    exit 1
-	    ;;
+        bysmb)
+            shift
+            vis_examplesBysmb $@   
+            ;;
+        bca)
+            shift
+            vis_examplesBca $@   
+            ;;
+        byname)
+            shift
+            vis_examplesByname $@   
+            ;;
+        byalias)
+            shift
+            vis_examplesByalias $@   
+            ;;
+        bymemory)
+            shift
+            vis_examplesBymemory $@   
+            ;;
+        bywhere)
+            shift
+            vis_examplesBywhere $@   
+            ;;
+        all)
+            shift
+            vis_examplesBysmb $@   
+            vis_examplesBca $@   
+            vis_examplesByname $@   
+            vis_examplesByalias $@   
+            vis_examplesBymemory $@   
+            vis_examplesBywhere $@   
+            ;;
+        *)
+            echo "Usage: $0 {byname|byalias|bymemory|bysmb|bywhere|all}"
+            exit 1
+            ;;
     esac
 }
 
@@ -320,8 +320,8 @@ barcContainerStdoutSpecific_BYNAME_DEFAULT () {
    EH_assert [[ $# -eq 1 ]]
 
     if [ "$1_" = "passive_" ] ; then
-	BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${LastName}_${FirstName}"
-	return
+        BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${LastName}_${FirstName}"
+        return
     fi
 
 
@@ -338,8 +338,8 @@ barcContainerStdoutSpecific_BYMEMORY_DEFAULT () {
    EH_assert [[ $# -eq 1 ]]
 
     if [ "$1_" = "passive_" ] ; then
-	BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${LastName}_${FirstName}"
-	return
+        BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${LastName}_${FirstName}"
+        return
     fi
 
   cat  << _EOF_
@@ -356,8 +356,8 @@ barcContainerStdoutSpecific_BYALIAS_DEFAULT () {
    EH_assert [[ $# -eq 1 ]]
 
     if [ "$1_" = "passive_" ] ; then
-	BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${AliasName}"
-	return
+        BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${AliasName}"
+        return
     fi
 
   cat  << _EOF_
@@ -374,8 +374,8 @@ barcContainerStdoutSpecific_BYSMB_DEFAULT () {
    EH_assert [[ $# -eq 1 ]]
 
     if [ "$1_" = "passive_" ] ; then
-	BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${Domain1}_${Domain2}"
-	return
+        BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${Domain1}_${Domain2}"
+        return
     fi
 
   cat  << _EOF_
@@ -391,8 +391,8 @@ barcContainerStdoutSpecific_BCA_DEFAULT () {
    EH_assert [[ $# -eq 1 ]]
 
     if [ "$1_" = "passive_" ] ; then
-	BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${masterAcct}_${LastName}_${FirstName}"
-	return
+        BarcTag="${bystarServiceType}_${bystarServiceSupportType}_${masterAcct}_${LastName}_${FirstName}"
+        return
     fi
 
   cat  << _EOF_
@@ -427,7 +427,7 @@ function vis_BarcFileCreate {
     if isDisposableRegisterUid ; then
         BarcInfoBasePath="/libre/etc/bystar/infoBase/barc"
     else
-	BarcInfoBasePath="/libre/ByStar/InfoBase/BARC"
+        BarcInfoBasePath="/libre/ByStar/InfoBase/BARC"
     fi
 
     opDo mkdir -p ${BarcInfoBasePath}
