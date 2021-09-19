@@ -109,8 +109,6 @@ typeset -t assignedUserIdNumber=""
 
 . ${opBinBase}/bisosCurrents_lib.sh
 
-. ${opBinBase}/opSyslogLib.sh
-
 . ${opBinBase}/usgBpos_lib.sh
 
 . ${opBinBase}/opSyslogLib.sh
@@ -122,8 +120,6 @@ typeset -t assignedUserIdNumber=""
 typeset -t ss=""      # Services Specifications
 typeset -t bxoId=""   # aabisBpo
 
-
-
 function G_postParamHook {
     if [ ! -z "${bxoId}" ] ; then
         bxoIdPrep
@@ -131,6 +127,7 @@ function G_postParamHook {
     fi
 
     bisosCurrentsGet
+    lpReturn
 }
 
 
@@ -184,7 +181,7 @@ $( examplesSeperatorChapter "Testing And Verifications" )
 ${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i visitUrl
 _EOF_
 
-  vis_examplesBxSvcLogInfo
+  vis_examplesBxSvcLogInfo ${oneSs}
 }
 
 

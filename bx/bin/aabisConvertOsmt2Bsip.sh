@@ -197,11 +197,16 @@ _EOF_
         #echo "${thisFunc}" "${each}"   
         lpDo FN_fileSafeCopy "${each}" "${each}.${eachDateTag}"
 
-        lpDo FN_lineRemoveFromFile "opDoRet bystarAcctAnalyze" "${each}.${eachDateTag}"
+        lpDo FN_lineRemoveFromFile "bystarAcctAnalyze" "${each}.${eachDateTag}"
 
         cat ${each}.${eachDateTag} | \
             sed -e "s@\#\!/bin/osmtKsh@#!/bin/bash@g" \
-                -e "s@bxoIdCentralPrep@bxoIdPrep@g"  > ${each}
+            -e "s@sr=@ss=@g" \
+            -e "s@bystarUid=@bxoId=@g" \
+            -e "s@bystarUidCentralPrep@bxoIdPrep@g" \
+            -e "s@bystarUidHome@bxoHome@g" \
+            -e "s@lsipusr:employee@bystar:bisos@g" \
+            -e "s@bxoIdCentralPrep@bxoIdPrep@g"  > ${each}
         
         lpReturn 0
     }
