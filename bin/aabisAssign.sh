@@ -78,7 +78,7 @@ _CommentEnd_
 
 . ${opBinBase}/box_lib.sh
 
-. ${aabisBinBase}/aabisAssign_lib.sh
+. ${aaisBinBase}/aabisAssign_lib.sh
 
 
 # PRE parameters

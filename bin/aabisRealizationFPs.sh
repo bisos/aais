@@ -100,9 +100,9 @@ _CommentEnd_
 
 . ${opBinBase}/siteNetworks_lib.sh
 
-. ${aabisBinBase}/aabisAssign_lib.sh
-. ${aabisBinBase}/aabisRealize_lib.sh
-. ${aabisBinBase}/aabisRealizationFPs_lib.sh
+. ${aaisBinBase}/aabisAssign_lib.sh
+. ${aaisBinBase}/aabisRealize_lib.sh
+. ${aaisBinBase}/aabisRealizationFPs_lib.sh
 
 # PRE parameters
 
