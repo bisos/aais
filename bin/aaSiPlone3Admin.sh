@@ -58,15 +58,15 @@ lcaPlone3Commands.sh user passwd baseAddr ploneVerb ploneArgs
 
 lcaPlone3Support.sh  -- iframe, redirect, ...
 
-bystarPlone3Commands.sh -p bystarUid=bystarUid  -i ploneAction ploneParams
+bystarPlone3Commands.sh -p bpoId=bystarUid  -i ploneAction ploneParams
 
-bystarPlone3Feature.sh -p bystarUid=bystarUid   FillUp the TOP/Below
+bystarPlone3Feature.sh -p bpoId=bystarUid   FillUp the TOP/Below
 
 bystarPlone3Styles.sh sits on top of bystarPlone3Features.sh does cssUpdate ... similar to plone3Proc.sh
 
 ----
 
-bystarPlone3Initial.sh -p bystarUid=bystarUid  Use initial templates to build the whole site
+bystarPlone3Initial.sh -p bpoId=bystarUid  Use initial templates to build the whole site
 
 bystarPlone3Admin.sh -- Full Add, Backup, 
 
@@ -139,10 +139,10 @@ _CommentEnd_
 
 # PRE parameters
 typeset -t acctTypePrefix=""
-typeset -t bystarUid="MANDATORY"
+typeset -t bpoId="MANDATORY"
 
 function G_postParamHook {
-    #bystarUidHome=$( FN_absolutePathGet ~${bystarUid} )
+    #bpoHome=$( FN_absolutePathGet ~${bystarUid} )
     lpCurrentsGet
 }
 
@@ -177,36 +177,36 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Top Levels" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullUpdate
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullEssentials
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullSupplements  # fullContents + fullBuild
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullContents  # create ~buid/lcaPlone3 if needed
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullBuild     # subject to platformBasaBuildMode
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i fullReCreate  # Can Be Done remotely with REST-API
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullEssentials
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullSupplements  # fullContents + fullBuild
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullContents  # create ~buid/lcaPlone3 if needed
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullBuild     # subject to platformBasaBuildMode
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i fullReCreate  # Can Be Done remotely with REST-API
 $( examplesSeperatorChapter "PROVISIONING ACTIONS" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  fullAdd       # NOT Implemented
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -f -i  fullAdd    # NOT Implemented
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  ploneSiteAdd
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  fullAdd       # NOT Implemented
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -f -i  fullAdd    # NOT Implemented
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  ploneSiteAdd
 $( examplesSeperatorChapter "Virtual Host (TLD) Plone CONFIG  (www.xxx)" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostPloneConfigStdout
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostPloneConfigUpdate
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostPloneConfigVerify
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostPloneConfigShow
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostPloneConfigDelete
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostPloneConfigStdout
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostPloneConfigUpdate
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostPloneConfigVerify
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostPloneConfigShow
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostPloneConfigDelete
 $( examplesSeperatorChapter "Virtual Host (TLD) Plone CONFIG  (xxx.bysmb.net)" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostSldPloneConfigStdout
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostSldPloneConfigUpdate
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostSldPloneConfigVerify
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostSldPloneConfigShow
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  virHostSldPloneConfigDelete
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostSldPloneConfigStdout
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostSldPloneConfigUpdate
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostSldPloneConfigVerify
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostSldPloneConfigShow
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  virHostSldPloneConfigDelete
 $( examplesSeperatorChapter "DNS" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i dnsUpdate
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  dnsDelete
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i dnsUpdate
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  dnsDelete
 $( examplesSeperatorChapter "BACKUP" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  backupPloneSite
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  backupPloneSite
 $( examplesSeperatorChapter "DEACTIVATION ACTIONS" )
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  fullDelete
-${G_myName} ${extraInfo} -p bystarUid=${thisOneSaNu} -i  serviceDelete
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  fullDelete
+${G_myName} ${extraInfo} -p bpoId=${thisOneSaNu} -i  serviceDelete
 _EOF_
 }
 
@@ -243,9 +243,9 @@ function vis_fullEssentials {
 
     opDoComplain vis_ploneSiteCreate
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneSitePrep
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneSitePrep
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneManagerAdd
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneManagerAdd
 }
 
 
@@ -255,11 +255,11 @@ function vis_fullReCreate {
 
     bystarBagpLoad
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneSiteAdd
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneSiteAdd
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneSitePrep
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneSitePrep
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneManagerAdd
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneManagerAdd
 }
 
 
@@ -287,15 +287,15 @@ function vis_fullContentsOld {
     # If the site has already been configured, we run the site's own 
     # script otherwise we assume it is a fresh site and we initialize it.
     #
-    if [[ -d ${bystarUidHome}/lcaPlone/ContentTree ]] ; then
-        opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i lcaPloneBaseSetup
+    if [[ -d ${bpoHome}/lcaPlone/ContentTree ]] ; then
+        opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i lcaPloneBaseSetup
 
         opDoRet cd ${cp_acctUidHome}/lcaPlone
         EH_retOnFail
 
         opDo ./plone3Proc.sh  -i fullUpdateAll
     else
-        opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i lcaPloneFullSetup
+        opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i lcaPloneFullSetup
     fi
 }
 
@@ -309,7 +309,7 @@ _EOF_
 
     bystarBagpLoad
 
-    opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i lcaPloneBaseSetup
+    opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i lcaPloneBaseSetup
 
     lpReturn
 }
@@ -333,27 +333,27 @@ _EOF_
     case ${cp_platformBasaBuildMode} in
         "")
             describeF
-            ANT_cooked "platformBasaBuildMode is empty/blank -- fast for bystarUid=${bystarUid} -- fullBuild Skipped:"
-            ANT_cooked "Later Run: bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i ploneFullSetup"
+            ANT_cooked "platformBasaBuildMode is empty/blank -- fast for bpoId=${bystarUid} -- fullBuild Skipped:"
+            ANT_cooked "Later Run: bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i ploneFullSetup"
             ;;
 
         "fast")
             describeF
-            ANT_raw "fast for bystarUid=${bystarUid} -- fullBuild Skipped:"
+            ANT_raw "fast for bpoId=${bystarUid} -- fullBuild Skipped:"
             ;;
 
         "complete")  
-            if [[ -d ${bystarUidHome}/lcaPlone3 ]] ; then
-                #opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i reBuildUpdateAll
-                opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i ploneFullSetup
+            if [[ -d ${bpoHome}/lcaPlone3 ]] ; then
+                #opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i reBuildUpdateAll
+                opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i ploneFullSetup
             else
-                ANT_raw "No ${bystarUidHome}/lcaPlone3 -- fullBuild Skipped"
+                ANT_raw "No ${bpoHome}/lcaPlone3 -- fullBuild Skipped"
             fi
             ;;
         
         "mini")
             describeF
-            ANT_raw "mini for bystarUid=${bystarUid} is -- fullBuild Skipped"
+            ANT_raw "mini for bpoId=${bystarUid} is -- fullBuild Skipped"
             ;;
 
         *)
@@ -374,13 +374,13 @@ function vis_fullBuildObsoleted {
     # If the site has already been configured, we run the site's own 
     # script otherwise we assume it is a fress site and we initialize it.
     #
-    if [[ -d ${bystarUidHome}/lcaPlone/ContentTree ]] ; then
+    if [[ -d ${bpoHome}/lcaPlone/ContentTree ]] ; then
         opDoRet cd ${cp_acctUidHome}/lcaPlone
         EH_retOnFail
 
         opDo ./plone3Proc.sh  -i fullUpdateAll
     else
-        ANT_raw "No ${bystarUidHome}/lcaPlone/ContentTree -- Skipped"
+        ANT_raw "No ${bpoHome}/lcaPlone/ContentTree -- Skipped"
     fi
 }
 
@@ -391,11 +391,11 @@ function vis_fullSupplementsObsoleted {
 
     bystarBagpLoad
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneSitePrep
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneSitePrep
 
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneManagerAdd
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneManagerAdd
 
-    opDoAfterPause bystarPlone3Initial.sh -p bystarUid="${bystarUid}" -i lcaPloneFullSetup
+    opDoAfterPause bystarPlone3Initial.sh -p bpoId="${bystarUid}" -i lcaPloneFullSetup
 }
 
 
@@ -421,7 +421,7 @@ function vis_ploneSiteCreate {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bystarUid}_" != "MANDATORY_" ]]
     
-    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bystarUid="${bystarUid}" -i ploneSiteAdd
+    opDoAfterPause bystarPlone3Commands.sh ${G_commandOptions} -p bpoId="${bystarUid}" -i ploneSiteAdd
 
     opDoAfterPause vis_apache2SiteBasePrep
 
@@ -435,7 +435,6 @@ function vis_apache2SiteBasePrep {
 
   G_abortIfNotRunningAsRoot
 
-  opDoRet bystarAcctAnalyze ${bystarUid}
 
   opAcctInfoGet ${bystarUid}
 
@@ -446,7 +445,7 @@ function vis_apache2SiteBasePrep {
   opDoExit mkdir -p ${opAcct_homeDir}/lcaApache2/www/logs
 
   #opDo chown -R ${bystarUid} ${opAcct_homeDir}/lcaApache2
-  opDo chown -R lsipusr:employee ${opAcct_homeDir}/lcaApache2
+  opDo chown -R bystar:bisos ${opAcct_homeDir}/lcaApache2
   opDo sudo -u root chmod -R  g+w ${opAcct_homeDir}/lcaApache2
 }
 
@@ -483,7 +482,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bystarUid}_" != "MANDATORY_" ]]
 
-    opDo bystarPlone3Commands.sh -h -v -n showRun -p bystarUid=${bystarUid} -i ploneSiteDelete
+    opDo bystarPlone3Commands.sh -h -v -n showRun -p bpoId=${bystarUid} -i ploneSiteDelete
 
     opDo vis_virHostPloneConfigDelete
 
@@ -655,9 +654,8 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
     bystarAcctParamsPrep
-    #opDoRet bystarAcctAnalyze ${bystarUid}
     #opAcctInfoGet ${bystarUid}
 
     echo "/etc/apache2/sites-available/${bystarDomFormTld_plone}.conf"
@@ -675,7 +673,6 @@ function vis_virHostPloneConfigUpdate {
 
   bystarAcctParamsPrep
 
-  #opDoRet bystarAcctAnalyze ${bystarUid}
   
   thisConfigFile=$( vis_configFileNameTldGet )
 
@@ -697,7 +694,6 @@ function vis_virHostPloneConfigVerify {
 
   #G_abortIfNotRunningAsRoot
 
-  opDoRet bystarAcctAnalyze ${bystarUid}
   
   #thisConfigFile="/etc/apache2/sites-available/${bystarDomFormTld_plone}"
   thisConfigFile=$( vis_configFileNameTldGet )
@@ -717,7 +713,6 @@ function vis_virHostPloneConfigShow {
 
   #G_abortIfNotRunningAsRoot
 
-  opDoRet bystarAcctAnalyze ${bystarUid}
   
   thisConfigFile="/etc/apache2/sites-available/${bystarDomFormTld_plone}"
 
@@ -905,9 +900,8 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
     bystarAcctParamsPrep
-    #opDoRet bystarAcctAnalyze ${bystarUid}
     #opAcctInfoGet ${bystarUid}
 
     echo "/etc/apache2/sites-available/${bystarDomFormSld_plone}.conf"
@@ -931,7 +925,6 @@ function vis_virHostSldPloneConfigUpdate {
         return 0
     fi
 
-  #opDoRet bystarAcctAnalyze ${bystarUid}
   
   #thisConfigFile="/etc/apache2/sites-available/${bystarDomFormSld_plone}"
   thisConfigFile=$( vis_configFileNameSldGet )
@@ -955,7 +948,6 @@ function vis_virHostSldPloneConfigVerify {
 
   #G_abortIfNotRunningAsRoot
 
-  opDoRet bystarAcctAnalyze ${bystarUid}
 
     if [ "${bystarDomFormSld_plone}_" == "_" ] ; then
         ANT_raw "Skipping blank  bystarDomFormSld_plone"
@@ -984,7 +976,6 @@ function vis_virHostSldPloneConfigShow {
 
   #G_abortIfNotRunningAsRoot
 
-  opDoRet bystarAcctAnalyze ${bystarUid}
 
     if [ "${bystarDomFormSld_plone}_" == "_" ] ; then
         ANT_raw "Skipping blank  bystarDomFormSld_plone"

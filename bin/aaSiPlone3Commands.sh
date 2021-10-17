@@ -59,28 +59,28 @@ _EOF_
 #. ${opBinBase}/bystarInfoBase.libSh
 
 # bystarHereAcct.libSh
-. ${opBinBase}/bystarHereAcct.libSh
-
+#. ${opBinBase}/bystarHereAcct.libSh
+. ${aaisBinBase}/aaisCommon_lib.sh
 
 # PRE parameters
 typeset -t acctTypePrefix=""
 # typeset -t bpoId=""
 
 typeset -t si=""      # Service Instance
-typeset -t bpoId=""   # aabisBpo
+typeset -t bpoId=""   # aaisBpo
 
 
 function G_postParamHook {
     if [ ! -z "${bpoId}" ] ; then
-        bxoIdPrep
+        # bpoIdPrep
         bpoHome=$( FN_absolutePathGet ~${bpoId} )
     fi
 
     bisosCurrentsGet
 
-    containerZopeUser=$( bystarHereAcctContainerPlone3UserGet )
-    containerZopePasswd=$( bystarHereAcctContainerPlone3PasswdGet )
-    containerZopeBaseUrl=$( bystarHereAcctContainerPlone3BaseUrlGet )
+    #containerZopeUser=$( bystarHereAcctContainerPlone3UserGet )
+    #containerZopePasswd=$( bystarHereAcctContainerPlone3PasswdGet )
+    #containerZopeBaseUrl=$( bystarHereAcctContainerPlone3BaseUrlGet )
 
     oneInputFile="/tmp/oneInput.html"
 }
@@ -218,7 +218,6 @@ function vis_ploneSiteAuthenticatorGet {
 
     bystarBagpLoad
 
-  opDoRet bystarAcctAnalyze ${bpoId}
 
   opAcctInfoGet ${bpoId}
 
@@ -238,7 +237,6 @@ function vis_ploneSiteAuthenticatorGetBystarUid {
 
     bystarBagpLoad
 
-  opDoRet bystarAcctAnalyze ${bpoId}
 
   opAcctInfoGet ${bpoId}
 
@@ -251,24 +249,26 @@ function vis_ploneSiteAuthenticatorGetBystarUid {
   grep _authenticator ${logFile} | sed -e 's/.*value="//' -e 's/".*$//'
 }
 
-
 function vis_ploneSiteAdd {
+    G_funcEntry
+    function describeF {  cat  << _EOF_
+_EOF_
+    }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
+    EH_assert [ -n "${bpoId}" ]
+    EH_assert [ -n "${si}" ]
 
-    bystarBagpLoad
+    lpDo loadSiParams "${bpoId}" "${si}"
 
-  opDoRet bystarAcctAnalyze ${bpoId}
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-  opAcctInfoGet ${bpoId}
-
- opDo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} ${containerZopeBaseUrl} \
-     /manage_addProduct/CMFPlone/addPloneSite \
-     -d id=${cp_acctMainBaseDomain} \
-     -d title=${cp_acctMainBaseDomain} \
-     -d create_userfolder=1 \
-     -d description="The+Web+Site+Of+${cp_acctMainBaseDomain}" \
-     -d submit=+Add+Plone+Site+
+    opDo echo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} ${containerZopeBaseUrl} \
+        /manage_addProduct/CMFPlone/addPloneSite \
+        -d id=${cp_acctMainBaseDomain} \
+        -d title=${cp_acctMainBaseDomain} \
+        -d create_userfolder=1 \
+        -d description="The+Web+Site+Of+${cp_acctMainBaseDomain}" \
+        -d submit=+Add+Plone+Site+
 
  # NOTYET, Check the error code, if error, check the error values
 
@@ -303,7 +303,6 @@ _EOF_
 
     bystarBagpLoad
 
-    opDoRet bystarAcctAnalyze ${bpoId}
 
     opAcctInfoGet ${bpoId}
 
@@ -328,7 +327,6 @@ function vis_ploneSitePrep {
 
     bystarBagpLoad
 
-  opDoRet bystarAcctAnalyze ${bpoId}
 
   opAcctInfoGet ${bpoId}
 
@@ -345,7 +343,6 @@ function vis_ploneSiteMailhost {
 
     bystarBagpLoad
 
-    opDoRet bystarAcctAnalyze ${bpoId}
 
     opAcctInfoGet ${bpoId}
 
@@ -377,7 +374,6 @@ function vis_ploneSiteSecurity {
 
     bystarBagpLoad
 
-    opDoRet bystarAcctAnalyze ${bpoId}
 
     opAcctInfoGet ${bpoId}
 
@@ -418,7 +414,6 @@ function vis_ploneUserAdd {
 
     bystarBagpLoad
 
-  opDoRet bystarAcctAnalyze ${bpoId}
 
   opAcctInfoGet ${bpoId}
 
@@ -468,7 +463,6 @@ function vis_ploneUserRoleSet {
 
     bystarBagpLoad
 
-  opDoRet bystarAcctAnalyze ${bpoId}
 
   opAcctInfoGet ${bpoId}
 

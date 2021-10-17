@@ -104,11 +104,11 @@ typeset -t assignedUserIdNumber=""
 
 # PRE parameters
 typeset -t sr="MANDATORY"
-typeset -t bystarUid="MANDATORY"
+typeset -t bpoId="MANDATORY"
 
 function G_postParamHook {
      lpCurrentsGet
-     bystarUidHome=$( FN_absolutePathGet ~${bystarUid} )
+     bpoHome=$( FN_absolutePathGet ~${bystarUid} )
      return 0
 }
 
@@ -134,31 +134,31 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i startAndFullUpdate svcCapabilityFlavor svcName svcFqdn
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i startAndFullUpdate generic docBySource doc.bysource.org
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i startAndFullUpdate svcCapabilityFlavor svcName svcFqdn
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i startAndFullUpdate generic docBySource doc.bysource.org
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i fullUpdate
 $( examplesSeperatorChapter "Initial Apache2 Content" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i initialContentStdout
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i initialContentStdout generic
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i initialContentStdout
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i initialContentStdout generic
 $( examplesSeperatorChapter "Virtual Host Apache2 CONFIG" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomFileNameGet
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout generic
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomUpdate
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomVerify
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomShow
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomDelete
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomFileNameGet
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout generic
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomVerify
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomShow
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomDelete
 $( examplesSeperatorChapter "bsr Bases Prep (iso,var,log,data,control)" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srSvcBasesPrep   
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srSvcBasesPrep   
 $( examplesSeperatorChapter "srBaseStart -- Initialize srBaseDir" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart svcCapabilityFlavor svcName svcFqdn
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart generic docBySource doc.bysource.org
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i srBaseUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart svcCapabilityFlavor svcName svcFqdn
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart generic docBySource doc.bysource.org
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i srBaseUpdate
 $( examplesSeperatorChapter "Enable/Disable Module" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfEnable        
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfDisable
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfEnable        
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfDisable
 $( examplesSeperatorChapter "Testing And Verifications" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i visitUrl
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i visitUrl
 _EOF_
 
   vis_examplesBxSvcLogInfo
@@ -178,7 +178,7 @@ function vis_srBaseStart {
    G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Usually Invoked from /opt/public/osmt/bin/bxtStartBsr.sh to create srBase
-** Expects -p bystarUid=  and -p sr=
+** Expects -p bpoId=  and -p sr=
 ** Create needed files and directories in srBase.
 ** Prepare Service Realization Bases -- Logs, Data, Control directories are then built based on this svcCapability.
 _EOF_
@@ -200,15 +200,14 @@ _EOF_
 
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     if [ -z "${sr}" -o "${sr}" == "MANDATORY" ] ; then
         EH_problem "Blank sr= -- srBase needs to be specified."
         lpReturn 101
     fi
 
-    srBaseDir="${bystarUidHome}/${sr}"
+    srBaseDir="${bpoHome}/${sr}"
     bsrAgent="${srBaseDir}/bsrAgent.sh"
 
     opDo FN_dirCreatePathIfNotThere ${srBaseDir}
@@ -247,8 +246,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
     EH_assert bystarSrAnalyze
     
     # NOTYET
@@ -280,8 +278,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     opDo vis_srSvcBasesPrep
 
@@ -329,8 +326,7 @@ function vis_initialContentStdout {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -375,8 +371,7 @@ function vis_srA2VirDomStdout {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -517,8 +512,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
   
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -536,9 +530,8 @@ _EOF_
 
 function vis_srA2VirDomVerify {
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
 
-    #opDoRet bystarAcctAnalyze ${bystarUid}
     
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -554,8 +547,7 @@ function vis_srA2VirDomVerify {
 function vis_srA2VirDomShow {
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    #opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
   
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -573,7 +565,6 @@ _EOF_
 
     G_abortIfNotRunningAsRoot
 
-    opDoRet bystarAcctAnalyze ${bystarUid}
   
     opDo /bin/rm "/etc/apache2/sites-available/geneweb.${cp_acctMainBaseDomain}" "/etc/apache2/sites-enabled/geneweb.${cp_acctMainBaseDomain}"
 
@@ -593,8 +584,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -617,7 +607,7 @@ _EOF_
     fi
 
     #opDo chown -R ${bystarUid} ${opAcct_homeDir}/lcaApache2/geneweb
-    #opDo chown -R lsipusr:employee ${opAcct_homeDir}/lcaApache2/geneweb
+    #opDo chown -R bystar:bisos ${opAcct_homeDir}/lcaApache2/geneweb
     #opDo sudo -u root chmod -R  g+w ${opAcct_homeDir}/lcaApache2/geneweb
 }
 
@@ -639,7 +629,7 @@ _EOF_
     opDo service apache2 restart
     opDo a2enconf geneweb
     opDo service apache2 reload
-    ANT_raw "test it with: ${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i visitUrl"
+    ANT_raw "test it with: ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i visitUrl"
 }
 
 
@@ -654,8 +644,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 

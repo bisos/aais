@@ -128,11 +128,11 @@ typeset -t assignedUserIdNumber=""
 
 # PRE parameters
 typeset -t RABE="MANDATORY"
-typeset -t bystarUid="MANDATORY"
+typeset -t bpoId="MANDATORY"
 
 function G_postParamHook {
      lpCurrentsGet
-     bystarUidHome=$( FN_absolutePathGet ~${bystarUid} )
+     bpoHome=$( FN_absolutePathGet ~${bystarUid} )
      return 0
 }
 
@@ -156,27 +156,27 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -i fullUpdate
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i fullDelete
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i serviceDelete
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i fullDelete
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i serviceDelete
 $( examplesSeperatorChapter "srBaseStart -- Initialize srBaseDir" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i srBaseUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i srBaseStart
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i srBaseUpdate
 $( examplesSeperatorChapter "dbaseInitialContent for Bystar Account" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseFullUpdate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseCreate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseInitialContentUpdate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseInitialContentStdout ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseFullUpdate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseCreate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseInitialContentUpdate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseInitialContentStdout ${oneBystarAcct}
 $( examplesSeperatorChapter "dbase Password And Access Control Setup For Database" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseAccessControlVisible ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -i dbaseAccessControlLimited ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseAccessControlVisible ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -i dbaseAccessControlLimited ${oneBystarAcct}
 $( examplesSeperatorChapter "ByStar Service Realization BaseDir Sync" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i srGwbBaseDirInfo
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i genewebToSrBase
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i genewebFromSrBase
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i srGwbBaseDirInfo
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i genewebToSrBase
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i genewebFromSrBase
 $( examplesSeperatorChapter "Bsr Images Process" )
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i imagesList
-${G_myName} ${extraInfo} -p bystarUid="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i imagesList | bueGimpManage.sh -h -v -n showRun -i scaleReplaceHeightTo 200
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i imagesList
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p sr=${oneSr} -p dbase=banan -i imagesList | bueGimpManage.sh -h -v -n showRun -i scaleReplaceHeightTo 200
 $( examplesSeperatorChapter "Access, Verification And Test" )
 ${G_myName} ${extraInfo} -i  visitUrl
 _EOF_
@@ -204,8 +204,7 @@ _EOF_
 
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
     #EH_assert bystarSrAnalyze
 
     if [ -z "${sr}" ] ; then
@@ -213,7 +212,7 @@ _EOF_
         lpReturn 101
     fi
 
-    srBaseDir="${bystarUidHome}/${sr}"
+    srBaseDir="${bpoHome}/${sr}"
     bsrAgent="${srBaseDir}/bsrAgent.sh"
 
     opDo FN_dirCreatePathIfNotThere ${srBaseDir}
@@ -237,7 +236,7 @@ _EOF_
 
     inBaseDirDo ${srA2BaseDir} fileParamManage.py -i fileParamWritePath ./srInfo/domName genealogy
 
-    #opDo chown -R lsipusr:employee ${srLogsBase}
+    #opDo chown -R bystar:bisos ${srLogsBase}
     #opDo chmod -R  g+w ${srLogsBase}
 }
 
@@ -256,8 +255,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
     EH_assert bystarSrAnalyze
 
     if [ -z ${srLogsBase} ] ; then
@@ -267,7 +265,7 @@ _EOF_
 
     opDoExit mkdir -p ${srLogsBase}
 
-    opDo chown -R lsipusr:employee ${srLogsBase}
+    opDo chown -R bystar:bisos ${srLogsBase}
     opDo chmod -R  g+w ${srLogsBase}
 }
 
@@ -285,8 +283,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     opDo vis_customizeAcctFromLine
 
@@ -369,7 +366,6 @@ function vis_dbaseFullUpdate {
 
     G_abortIfNotRunningAsRoot
 
-    opDoRet bystarAcctAnalyze ${bystarUid}
 
   #opDo vis_dbaseCreate ${dbaseName}
   opDo vis_dbaseInitialContentUpdate ${dbaseName}
@@ -463,8 +459,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -501,8 +496,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
     EH_assert [[ "${dbase}" != "MANDATORY" ]]
@@ -517,7 +511,7 @@ _EOF_
 
     opDo /etc/init.d/geneweb start
 
-    opDo chown -R lsipusr:employee ${srBaseDir}/gwbBase
+    opDo chown -R bystar:bisos ${srBaseDir}/gwbBase
 }
 
 function vis_genewebFromSrBase {
@@ -528,8 +522,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    opDoRet bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
     EH_assert [[ "${dbase}" != "MANDATORY" ]]
@@ -557,8 +550,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    #EH_assert bystarUidCentralPrep
-    #opDoRet bystarAcctAnalyze ${bystarUid}
+    #EH_assert bpoIdPrep
 
     #EH_assert bystarSrAnalyze
 
@@ -579,7 +571,7 @@ _CommentEnd_
 function bxSvcLogParamsObtain {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-Expects $1 as ${bystarUidHome}
+Expects $1 as ${bpoHome}
 _EOF_
     }
     EH_assert [[ $# -eq 1 ]]

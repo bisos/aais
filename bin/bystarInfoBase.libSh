@@ -1,5 +1,5 @@
-#!/bin/osmtKsh
-#!/bin/osmtKsh
+#!/bin/bash
+#!/bin/bash
 
 typeset RcsId="$Id: bystarInfoBase.libSh,v 1.1.1.1 2016-06-08 23:49:51 lsipusr Exp $"
 
@@ -66,7 +66,6 @@ function bystarAcctParamsPrep {
 
     #bystarBagpLoad 2> /dev/null
 
-  opDoRet bystarAcctAnalyze ${bystarUid} 2> /dev/null
 
   opAcctInfoGet ${bystarUid} 2> /dev/null
 

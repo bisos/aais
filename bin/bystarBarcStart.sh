@@ -105,7 +105,7 @@ typeset -t domainHost=""
 typeset -t hostName=""
 
 # default bystarUid Must Be "" not MANDATORY
-typeset -t bystarUid=""
+typeset -t bpoId=""
 typeset -t originationMethod=""
 
 
@@ -200,8 +200,8 @@ ${G_myName} -v -n showRun ${bystarParamsMini} -i startToEssentials
 ${G_myName} ${extraInfo} ${bystarParamsMini} -i startToFullBg
 ${G_myName} ${extraInfo} ${bystarParamsMini} -i startToFullDev
 --- RENEW/RELOCATE Existing Account ---
-${G_myName} ${extraInfo} -p bystarUid=ua-35011 ${bystarParamsMini} -i renewPassive
-${G_myName} ${extraInfo} -p bystarUid=ua-35011 ${bystarParamsMini} -i startToFullFg
+${G_myName} ${extraInfo} -p bpoId=ua-35011 ${bystarParamsMini} -i renewPassive
+${G_myName} ${extraInfo} -p bpoId=ua-35011 ${bystarParamsMini} -i startToFullFg
 --- Full ---
 ${G_myName} ${extraInfo} ${bystarParamsFull} -i BarcStdout
 ${G_myName} ${extraInfo} ${bystarParamsFull} -i BarcFileCreate
@@ -300,7 +300,7 @@ function BarcContainer {
       bc_originatorHost="${opRunHostName}"
       bc_originatorId="${opRunAcctName}"
 
-      bc_bystarUid="${bystarUid}"
+      bc_bpoId="${bystarUid}"
     }
 _EOF_
 
@@ -464,7 +464,7 @@ _EOF_
 
     BarcFile=$( vis_BarcFileCreate 2> /dev/null )
 
-    #bystarUid=$( bystarBarcProc.sh ${G_commandOptions} -p BarcFile="${BarcFile}" -i startToEssentials )
+    #bpoId=$( bystarBarcProc.sh ${G_commandOptions} -p BarcFile="${BarcFile}" -i startToEssentials )
     #echo ${bystarUid}
 
     opDo bystarBarcProc.sh ${G_commandOptions} -p BarcFile="${BarcFile}" -i startToEssentials

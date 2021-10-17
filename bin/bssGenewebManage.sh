@@ -100,7 +100,7 @@ _CommentEnd_
 . ${opBinBase}/lpReRunAs.libSh
 
 . ${opBinBase}/opAcctLib.sh
-. ${opBinBase}/bxo_lib.sh
+. ${opBinBase}/bpo_lib.sh
 . ${opBinBase}/opDoAtAsLib.sh
 . ${opBinBase}/lcnFileParams.libSh
 . ${opBinBase}/lpParams.libSh
@@ -115,7 +115,7 @@ typeset -t assignedUserIdNumber=""
 . ${opBinBase}/bystarHook.libSh
 
 # ./bxo_lib.sh
-. ${opBinBase}/bxo_lib.sh
+. ${opBinBase}/bpo_lib.sh
 . ${opBinBase}/mmaLib.sh
 
 . ${opBinBase}/unisosAccounts_lib.sh
@@ -134,12 +134,12 @@ typeset -t assignedUserIdNumber=""
 typeset -t RABE="MANDATORY"
 
 typeset -t ss=""      # Services Specifications
-typeset -t bxoId=""   # aabisBpo
+typeset -t bpoId=""   # aaisBpo
 
 function G_postParamHook {
-    if [ ! -z "${bxoId}" ] ; then
-        bxoIdPrep
-        bxoHome=$( FN_absolutePathGet ~${bxoId} )
+    if [ ! -z "${bpoId}" ] ; then
+        bpoIdPrep
+        bpoHome=$( FN_absolutePathGet ~${bpoId} )
     fi
 
     bisosCurrentsGet
@@ -167,27 +167,27 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -i fullUpdate
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i fullDelete
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i serviceDelete
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i fullDelete
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i serviceDelete
 $( examplesSeperatorChapter "srBaseStart -- Initialize srBaseDir" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i srBaseStart
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i srBaseUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i srBaseStart
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i srBaseUpdate
 $( examplesSeperatorChapter "dbaseInitialContent for Bystar Account" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseFullUpdate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseCreate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseInitialContentUpdate ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseInitialContentStdout ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseFullUpdate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseCreate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseInitialContentUpdate ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseInitialContentStdout ${oneBystarAcct}
 $( examplesSeperatorChapter "dbase Password And Access Control Setup For Database" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseAccessControlVisible ${oneBystarAcct}
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseAccessControlLimited ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseAccessControlVisible ${oneBystarAcct}
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -i dbaseAccessControlLimited ${oneBystarAcct}
 $( examplesSeperatorChapter "ByStar Service Realization BaseDir Sync" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i srGwbBaseDirInfo
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i genewebToSrBase
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i genewebFromSrBase
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i srGwbBaseDirInfo
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i genewebToSrBase
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i genewebFromSrBase
 $( examplesSeperatorChapter "Bsr Images Process" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i imagesList
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i imagesList | bueGimpManage.sh -h -v -n showRun -i scaleReplaceHeightTo 200
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i imagesList
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSr} -p dbase=banan -i imagesList | bueGimpManage.sh -h -v -n showRun -i scaleReplaceHeightTo 200
 $( examplesSeperatorChapter "Access, Verification And Test" )
 ${G_myName} ${extraInfo} -i  visitUrl
 _EOF_
@@ -215,7 +215,7 @@ _EOF_
 
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     #EH_assert bystarSrAnalyze
 
     if [ -z "${ss}" ] ; then
@@ -223,7 +223,7 @@ _EOF_
         lpReturn 101
     fi
 
-    srBaseDir="${bxoHome}/${ss}"
+    srBaseDir="${bpoHome}/${ss}"
     bsrAgent="${srBaseDir}/bsrAgent.sh"
 
     opDo FN_dirCreatePathIfNotThere ${srBaseDir}
@@ -247,7 +247,7 @@ _EOF_
 
     inBaseDirDo ${srA2BaseDir} fileParamManage.py -i fileParamWritePath ./srInfo/domName genealogy
 
-    #opDo chown -R lsipusr:employee ${srLogsBase}
+    #opDo chown -R bystar:bisos ${srLogsBase}
     #opDo chmod -R  g+w ${srLogsBase}
 }
 
@@ -266,7 +266,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     EH_assert bystarSrAnalyze
 
     if [ -z ${srLogsBase} ] ; then
@@ -276,7 +276,7 @@ _EOF_
 
     opDoExit mkdir -p ${srLogsBase}
 
-    opDo chown -R lsipusr:employee ${srLogsBase}
+    opDo chown -R bystar:bisos ${srLogsBase}
     opDo chmod -R  g+w ${srLogsBase}
 }
 
@@ -294,7 +294,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     opDo vis_customizeAcctFromLine
 
@@ -328,7 +328,7 @@ _CommentEnd_
 
 function vis_dbaseAccessControlVisible {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     dbaseName=$1
 
@@ -347,7 +347,7 @@ function vis_dbaseAccessControlVisible {
 
 function vis_dbaseAccessControlLimited {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     dbaseName=$1
 
@@ -371,7 +371,7 @@ _CommentEnd_
 
 function vis_dbaseFullUpdate {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     dbaseName=$1
 
@@ -387,7 +387,7 @@ function vis_dbaseFullUpdate {
 
 function vis_dbaseCreate {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     dbaseName=$1
 
@@ -403,7 +403,7 @@ function vis_dbaseCreate {
 
 function vis_dbaseInitialContentUpdate {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
   dbaseName=$1
 
@@ -423,7 +423,7 @@ function vis_dbaseInitialContentUpdate {
 
 function vis_dbaseInitialContentStdout {
     EH_assert [[ $# -eq 1 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
   dbaseName=$1
 
@@ -470,7 +470,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -507,7 +507,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
     EH_assert [[ "${dbase}" != "MANDATORY" ]]
@@ -522,7 +522,7 @@ _EOF_
 
     opDo /etc/init.d/geneweb start
 
-    opDo chown -R lsipusr:employee ${srBaseDir}/gwbBase
+    opDo chown -R bystar:bisos ${srBaseDir}/gwbBase
 }
 
 function vis_genewebFromSrBase {
@@ -533,7 +533,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
     EH_assert [[ "${dbase}" != "MANDATORY" ]]
@@ -561,7 +561,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    #EH_assert bxoIdPrep
+    #EH_assert bpoIdPrep
 
     #EH_assert bystarSrAnalyze
 
@@ -582,7 +582,7 @@ _CommentEnd_
 function bxSvcLogParamsObtain {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-Expects $1 as ${bxoHome}
+Expects $1 as ${bpoHome}
 _EOF_
     }
     EH_assert [[ $# -eq 1 ]]

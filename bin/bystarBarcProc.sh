@@ -121,8 +121,8 @@ function vis_startToEssentials {
         return 101
     fi
 
-    #bystarUid=$( bystarAcctAdmin.sh ${G_commandOptions} -p RBAE="$RBAE" -i startToEssentials 2> /dev/null )
-    #bystarUid=$( bystarAcctAdmin.sh ${G_commandOptions} -p RBAE="$RBAE" -i startToEssentials )
+    #bpoId=$( bystarAcctAdmin.sh ${G_commandOptions} -p RBAE="$RBAE" -i startToEssentials 2> /dev/null )
+    #bpoId=$( bystarAcctAdmin.sh ${G_commandOptions} -p RBAE="$RBAE" -i startToEssentials )
 
     #echo ${bystarUid}
     

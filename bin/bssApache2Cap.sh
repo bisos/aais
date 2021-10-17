@@ -73,8 +73,8 @@ _CommentEnd_
 . ${opBinBase}/lpParams.libSh
 . ${opBinBase}/lpReRunAs.libSh
 
-. ${opBinBase}/bxo_lib.sh
-. ${opBinBase}/bxoId_lib.sh
+. ${opBinBase}/bpo_lib.sh
+. ${opBinBase}/bpoId_lib.sh
 
 . ${opBinBase}/opAcctLib.sh
 . ${opBinBase}/bystarLib.sh
@@ -115,15 +115,15 @@ typeset -t assignedUserIdNumber=""
 
 # PRE parameters
 # typeset -t ss="MANDATORY"
-# typeset -t bxoId="MANDATORY"
+# typeset -t bpoId="MANDATORY"
 
 typeset -t ss=""      # Services Specifications
-typeset -t bxoId=""   # aabisBpo
+typeset -t bpoId=""   # aaisBpo
 
 function G_postParamHook {
-    if [ ! -z "${bxoId}" ] ; then
-        bxoIdPrep
-        bxoHome=$( FN_absolutePathGet ~${bxoId} )
+    if [ ! -z "${bpoId}" ] ; then
+        bpoIdPrep
+        bpoHome=$( FN_absolutePathGet ~${bpoId} )
     fi
 
     bisosCurrentsGet
@@ -153,32 +153,32 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate svcCapabilityFlavor svcName svcFqdn
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate generic docBySource doc.bysource.org
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i fullUpdate
-${G_myName} ${extraInfo} -p bxoId=aaisByDomain -p ss=${oneSs} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate svcCapabilityFlavor svcName svcFqdn
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate generic docBySource doc.bysource.org
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=aaisByDomain -p ss=${oneSs} -i fullUpdate
 $( examplesSeperatorChapter "Initial Apache2 Content" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout generic
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout generic
 $( examplesSeperatorChapter "Virtual Host Apache2 CONFIG" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomFileNameGet
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomStdout
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomStdout generic
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomUpdate
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomVerify
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomShow
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomDelete
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomFileNameGet
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomStdout
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomStdout generic
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomVerify
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomShow
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srA2VirDomDelete
 $( examplesSeperatorChapter "bsr Bases Prep (iso,var,log,data,control)" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i srSvcBasesPrep
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i srSvcBasesPrep
 $( examplesSeperatorChapter "srBaseStart -- Initialize srBaseDir" )
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseStart svcCapabilityFlavor svcName svcFqdn
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseStart generic docBySource doc.bysource.org
-${G_myName} ${extraInfo} -p bxoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseUpdate
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseStart svcCapabilityFlavor svcName svcFqdn
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseStart generic docBySource doc.bysource.org
+${G_myName} ${extraInfo} -p bpoId="${oneBystarAcct}" -p ss=${oneSs} -i srBaseUpdate
 $( examplesSeperatorChapter "Enable/Disable Module" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i apache2ConfEnable
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i apache2ConfDisable
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i apache2ConfEnable
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i apache2ConfDisable
 $( examplesSeperatorChapter "Testing And Verifications" )
-${G_myName} ${extraInfo} -p bxoId=${oneBystarAcct} -p ss=${oneSs} -i visitUrl
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i visitUrl
 _EOF_
 
   vis_examplesBxSvcLogInfo ${oneSs}
@@ -198,7 +198,7 @@ function vis_srBaseStart {
    G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Usually Invoked from /opt/public/osmt/bin/bxtStartBsr.sh to create srBase
-** Expects -p bxoId=  and -p ss=
+** Expects -p bpoId=  and -p ss=
 ** Create needed files and directories in srBase.
 ** Prepare Service Realization Bases -- Logs, Data, Control directories are then built based on this svcCapability.
 _EOF_
@@ -220,10 +220,10 @@ _EOF_
 
     #if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     EH_assert [ -n "${ss}" ]
 
-    srBaseDir="${bxoHome}/${ss}"
+    srBaseDir="${bpoHome}/${ss}"
     bsrAgent="${srBaseDir}/bsrAgent.sh"
 
     opDo FN_dirCreatePathIfNotThere ${srBaseDir}
@@ -262,7 +262,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     EH_assert bxoSrAnalyze
     
     # NOTYET
@@ -294,7 +294,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     opDo vis_srSvcBasesPrep
 
@@ -309,7 +309,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     opDo vis_srSvcBasesPrep
 
@@ -338,7 +338,7 @@ function vis_serviceDelete {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert [[ "${bxoId}" != "MANDATORY" ]]
+    EH_assert [[ "${bpoId}" != "MANDATORY" ]]
 
     lpReturn
 }
@@ -358,7 +358,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     EH_assert [ -n "${ss}" ]
 
     EH_assert bxoSrAnalyze
@@ -404,7 +404,7 @@ function vis_srA2VirDomStdout {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     EH_assert bxoSrAnalyze
 
@@ -547,7 +547,7 @@ _EOF_
 
     # if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -565,7 +565,7 @@ _EOF_
 
 function vis_srA2VirDomVerify {
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
@@ -582,7 +582,7 @@ function vis_srA2VirDomVerify {
 function vis_srA2VirDomShow {
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
   
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -596,7 +596,7 @@ function vis_srA2VirDomDelete {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert [[ "${bxoId}_" != "MANDATORY_" ]]
+    EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
     G_abortIfNotRunningAsRoot
 
@@ -620,7 +620,7 @@ _EOF_
 
     # if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
     EH_assert [ -n "${ss}" ]
 
     EH_assert bxoSrAnalyze
@@ -643,8 +643,8 @@ _EOF_
         opDo eval "vis_initialContentStdout > ${srSvcBaseData}/html/index.html"
     fi
 
-    #opDo chown -R ${bxoId} ${opAcct_homeDir}/lcaApache2/geneweb
-    #opDo chown -R lsipusr:employee ${opAcct_homeDir}/lcaApache2/geneweb
+    #opDo chown -R ${bpoId} ${opAcct_homeDir}/lcaApache2/geneweb
+    #opDo chown -R bystar:bisos ${opAcct_homeDir}/lcaApache2/geneweb
     #opDo sudo -u root chmod -R  g+w ${opAcct_homeDir}/lcaApache2/geneweb
 }
 
@@ -681,7 +681,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
     EH_assert bxoSrAnalyze
 

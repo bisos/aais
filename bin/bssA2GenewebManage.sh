@@ -71,8 +71,8 @@ _CommentEnd_
 . ${opBinBase}/lpParams.libSh
 . ${opBinBase}/lpReRunAs.libSh
 
-. ${opBinBase}/bxo_lib.sh
-. ${opBinBase}/bxoId_lib.sh
+. ${opBinBase}/bpo_lib.sh
+. ${opBinBase}/bpoId_lib.sh
 
 . ${opBinBase}/opAcctLib.sh
 . ${opBinBase}/bystarLib.sh
@@ -113,12 +113,12 @@ typeset -t assignedUserIdNumber=""
 
 # PRE parameters
 typeset -t ss=""      # Services Specifications
-typeset -t bxoId=""   # aabisBpo
+typeset -t bpoId=""   # aaisBpo
 
 function G_postParamHook {
-    if [ ! -z "${bxoId}" ] ; then
-        bxoIdPrep
-        bxoHome=$( FN_absolutePathGet ~${bxoId} )
+    if [ ! -z "${bpoId}" ] ; then
+        bpoIdPrep
+        bpoHome=$( FN_absolutePathGet ~${bpoId} )
     fi
 
     bisosCurrentsGet
@@ -144,22 +144,22 @@ function vis_examples {
   cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i fullUpdate
-${G_myName} ${extraInfo} -p bxoId=aaisByDomain -p sr=${oneSr} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=aaisByDomain -p sr=${oneSr} -i fullUpdate
 $( examplesSeperatorChapter "Virtual Host Geneweb Apache2 CONFIG  (geneweb.xxx)" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomFileNameGet
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomUpdate
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomVerify
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomShow
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomDelete
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomFileNameGet
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomUpdate
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomVerify
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomShow
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomDelete
 $( examplesSeperatorChapter "bsr Bases Prep (iso,var,control)" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srA2VarBasePrep
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VarBasePrep
 $( examplesSeperatorChapter "Enable/Disable Module -- NOTYET" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfEnable        
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfDisable
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfEnable        
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i apache2ConfDisable
 $( examplesSeperatorChapter "Testing And Verifications" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i visitUrl
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i visitUrl
 _EOF_
 
   vis_examplesBxSvcLogInfo
@@ -182,7 +182,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 }
 
 function vis_fullUpdate%% {
@@ -193,8 +193,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
     opDo vis_genewebBasePrep
 
@@ -240,7 +239,7 @@ function vis_srA2VirDomStdout {
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -279,8 +278,7 @@ _EOF_
 
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
   
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -298,7 +296,7 @@ _EOF_
 
 function vis_srA2VirDomVerify {
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
 
     
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
@@ -315,7 +313,7 @@ function vis_srA2VirDomVerify {
 function vis_srA2VirDomShow {
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
   
     typeset thisConfigFile=$( vis_srA2VirDomFileNameGet )
 
@@ -353,14 +351,14 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn ${globalReRunRetVal}; fi;
 
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
     opDoExit mkdir -p ${srA2LogBaseDir}
 
     #opDo chown -R ${bystarUid} ${opAcct_homeDir}/lcaApache2/geneweb
-    #opDo chown -R lsipusr:employee ${opAcct_homeDir}/lcaApache2/geneweb
+    #opDo chown -R bystar:bisos ${opAcct_homeDir}/lcaApache2/geneweb
     #opDo sudo -u root chmod -R  g+w ${opAcct_homeDir}/lcaApache2/geneweb
 }
 
@@ -382,7 +380,7 @@ _EOF_
     opDo service apache2 restart
     opDo a2enconf geneweb
     opDo service apache2 reload
-    ANT_raw "test it with: ${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i visitUrl"
+    ANT_raw "test it with: ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i visitUrl"
 }
 
 
@@ -397,7 +395,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    EH_assert bystarUidCentralPrep
+    EH_assert bpoIdPrep
 
     EH_assert bystarSrAnalyze
 
@@ -418,7 +416,7 @@ _CommentEnd_
 function bxSvcLogParamsObtain {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-Expects $1 as ${bystarUidHome}
+Expects $1 as ${bpoHome}
 _EOF_
     }
     EH_assert [[ $# -eq 1 ]]

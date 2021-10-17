@@ -77,7 +77,7 @@ baseDir=""
 
 function G_postParamHook {
      lpCurrentsGet
-     #bystarUidHome=$( FN_absolutePathGet ~${bystarUid} )
+     #bpoHome=$( FN_absolutePathGet ~${bystarUid} )
      return 0
 }
 
@@ -124,10 +124,10 @@ $( examplesSeperatorChapter "Transition Facilities -- Update bxtSr Object In CWD
 ${G_myName} ${extraInfo} -i updateObjectInCwd                                  # Auto Detect
 ${G_myName} ${extraInfo} -i updateObjectInCwd custom                           # for old dirs when objectType is not there
 $( examplesSeperatorChapter "Start BxSR Service For BxO" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -i startBsrSvc svcCapName svcCapFlavor svcName
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -i startBsrSvc apache2 generic docs
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -f -i startBsrSvc apache2 generic docs
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -i startBsrSvc svcCapName svcCapFlavor svcName svcFqdn
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -i startBsrSvc svcCapName svcCapFlavor svcName
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -i startBsrSvc apache2 generic docs
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -f -i startBsrSvc apache2 generic docs
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -i startBsrSvc svcCapName svcCapFlavor svcName svcFqdn
 _EOF_
 }
 
@@ -162,9 +162,9 @@ _EOF_
 
     typeset here=$( pwd )
 
-    typeset bystarUid=$( vis_bisoIdGetThere ${here} )
+    typeset bpoId=$( vis_bisoIdGetThere ${here} )
     if [ -z "${bystarUid}" ] ; then
-        EH_problem "Missing bxoId"
+        EH_problem "Missing bpoId"
         EH_problem "You Are Likely Not Under A bxoBaseDir"
         lpReturn 101
     fi
@@ -173,7 +173,7 @@ _EOF_
 
     case ${svcCapabilityName} in
         "apache2")
-            opDo bsrApache2Cap.sh -h -v -n showRun -p bystarUid=${bystarUid} -p sr=${srBase} -i srBaseStart ${svcCapabilityFlavor} ${svcName} ${srFqdn}     
+            opDo bsrApache2Cap.sh -h -v -n showRun -p bpoId=${bystarUid} -p sr=${srBase} -i srBaseStart ${svcCapabilityFlavor} ${svcName} ${srFqdn}     
             ;;
         *)
             EH_problem "Unexpected this=${svcCapabilityName}"
@@ -202,10 +202,9 @@ _EOF_
     typeset svcCapabilityFlavor=$2
     typeset svcName=$3
 
-    EH_assert bystarUidCentralPrep
-    bystarAcctAnalyze ${bystarUid}
+    EH_assert bpoIdPrep
 
-    typeset srBaseDir="${bystarUidHome}"/so/sr/${svcCapabilityName}/${svcName}
+    typeset srBaseDir="${bpoHome}"/so/sr/${svcCapabilityName}/${svcName}
 
     if [ -d "${srBaseDir}" ] ; then
         if [ "${G_forceMode}" != "force" ] ; then

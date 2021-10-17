@@ -46,10 +46,10 @@ _CommentBegin_
 _CommentEnd_
 
 
-function vis_aabis_registrarBaseObtain {
+function vis_aais_registrarBaseObtain {
    G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-** Obtains registrar bxoId's path
+** Obtains registrar bpoId's path
 *** Status: functional
 _EOF_
     }
@@ -66,16 +66,16 @@ _EOF_
     lpReturn
 }       
 
-function vis_aabis_registrarAssignBaseObtain {
+function vis_aais_registrarAssignBaseObtain {
    G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-** Obtains registrar bxoId's path + "/assign"
+** Obtains registrar bpoId's path + "/assign"
 *** Status: functional
 _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    local registrarBxoPath=$(vis_aabis_registrarBaseObtain)
+    local registrarBxoPath=$(vis_aais_registrarBaseObtain)
     EH_assert [ ! -z "${registrarBxoPath}" ]
 
     echo "${registrarBxoPath}/assign"
@@ -84,7 +84,7 @@ _EOF_
 }       
 
 
-function vis_aabis_withServiceTypeGetServiceLetter {
+function vis_aais_withServiceTypeGetServiceLetter {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** With \$1 as N B F etc return ServiceType
@@ -115,7 +115,7 @@ _EOF_
 }
 
 
-function vis_aabis_withServiceLetterGetServiceType {
+function vis_aais_withServiceLetterGetServiceType {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** With \$1 as N B F etc return ServiceType
@@ -146,7 +146,7 @@ _EOF_
 }
 
 
-function vis_aabis_withNuGetId {
+function vis_aais_withNuGetId {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** This is just string manipulation based on naming rules.
@@ -154,71 +154,71 @@ function vis_aabis_withNuGetId {
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisNu="$1"
+   local aaisNu="$1"
 
    EH_assert [ ! -z "${serviceType}" ]      
 
-   if ! isnum ${aabisNu} ; then
-       EH_problem "Bad input -- Expected a number -- aabisNu=${aabisNu}"
+   if ! isnum ${aaisNu} ; then
+       EH_problem "Bad input -- Expected a number -- aaisNu=${aaisNu}"
        lpReturn
    fi
 
-   local serviceLetter=$(lpDo vis_aabis_withServiceTypeGetServiceLetter ${serviceType})
+   local serviceLetter=$(lpDo vis_aais_withServiceTypeGetServiceLetter ${serviceType})
    
-   echo "By${serviceLetter}-${aabisNu}"
+   echo "By${serviceLetter}-${aaisNu}"
 }
 
 
-function vis_aabis_withIdGetAssignedBase {
+function vis_aais_withIdGetAssignedBase {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
-** aabisId is something like BN-1001
+** aaisId is something like BN-1001
 *** Status: untested
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisId=$1
+   local aaisId=$1
 
-   local byStarInitial=${aabisId:0:1}
-   local serviceTypeInitial=${aabisId:2:1}
-   local aabisNu=$( echo ${aabisId} |  sed -e 's:...-::' ) 
+   local byStarInitial=${aaisId:0:1}
+   local serviceTypeInitial=${aaisId:2:1}
+   local aaisNu=$( echo ${aaisId} |  sed -e 's:...-::' ) 
 
-   local thisServiceName=$(vis_aabis_withServiceLetterGetServiceType ${serviceTypeInitial} )
+   local thisServiceName=$(vis_aais_withServiceLetterGetServiceType ${serviceTypeInitial} )
    
-   local registrarBase=$(vis_aabis_registrarBaseObtain)
+   local registrarBase=$(vis_aais_registrarBaseObtain)
    EH_assert [ ! -z "${registrarBase}" ]
 
-   local aabisIdBase="${registrarBase}/assign/${thisServiceName}/${aabisNu}"
+   local aaisIdBase="${registrarBase}/assign/${thisServiceName}/${aaisNu}"
 
-   if [ ! -d "${aabisIdBase}" ] ; then
-       EH_problem "Missing aabisIdBase=${aabisIdBase}"
+   if [ ! -d "${aaisIdBase}" ] ; then
+       EH_problem "Missing aaisIdBase=${aaisIdBase}"
        lpReturn 101
    fi
 
-   echo ${aabisIdBase}
+   echo ${aaisIdBase}
 }
 
 
-function vis_aabis_withNuGetAssignedBase {
+function vis_aais_withNuGetAssignedBase {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
-** With aabisNu, get assigned base.
+** With aaisNu, get assigned base.
 *** Status: untested
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisNu=$1
+   local aaisNu=$1
 
-   local assignsBase=$(vis_aabis_registrarAssignBaseObtain)
+   local assignsBase=$(vis_aais_registrarAssignBaseObtain)
    EH_assert [ ! -z "${assignsBase}" ]
    
    EH_assert [ ! -z "${serviceType}" ]
    
-   echo "${assignsBase}/${serviceType}/${aabisNu}"
+   echo "${assignsBase}/${serviceType}/${aaisNu}"
 }
 
 
-function vis_aabis_serviceTypeAssignToFpsBaseAndPush {
+function vis_aais_serviceTypeAssignToFpsBaseAndPush {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -228,28 +228,28 @@ _EOF_
    EH_assert [ ! -z "${serviceType}" ]   
    EH_assert [ ! -z "${fpsBase}" ]
 
-   local aabisBase=$(lpDo vis_aabis_serviceTypeAssignToFpsBase)
-   EH_assert [ ! -z "${aabisBase}" ]
+   local aaisBase=$(lpDo vis_aais_serviceTypeAssignToFpsBase)
+   EH_assert [ ! -z "${aaisBase}" ]
 
-   lpDo vis_aabis_assignedServiceIdPush ${aabisBase}
+   lpDo vis_aais_assignedServiceIdPush ${aaisBase}
 }       
 
-function vis_aabis_assignedServiceIdPush {
+function vis_aais_assignedServiceIdPush {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisBase="$1"
-   EH_assert [ ! -z "${aabisBase}" ]
+   local aaisBase="$1"
+   EH_assert [ ! -z "${aaisBase}" ]
 
    lpReturn
    
-   lpDo eval echo ${aabisBase} \| bx-gitRepos -i addCommitPush all
+   lpDo eval echo ${aaisBase} \| bx-gitRepos -i addCommitPush all
 }       
 
 
-function vis_aabis_assignBasePull {
+function vis_aais_assignBasePull {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -257,14 +257,14 @@ _EOF_
 
    EH_assert [[ $# -eq 0 ]]
    
-   local registrarAssignPath=$(vis_aabis_registrAssignBaseObtain)
+   local registrarAssignPath=$(vis_aais_registrAssignBaseObtain)
    EH_assert [ ! -z "${registrarAssignPath}" ]
   
    lpDo eval echo ${registrarAssignBase} \| bx-gitRepos -i gitRemPull
 }
 
 
-function vis_aabis_UnAssign {
+function vis_aais_UnAssign {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** NOTYET, mark fpsBase as unassigned -- When to be used?
@@ -272,34 +272,34 @@ _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
 
-   local aabisBase="$1"
-   EH_assert [ ! -z "${aabisBase}" ]
+   local aaisBase="$1"
+   EH_assert [ ! -z "${aaisBase}" ]
 
-   local fpsBaseFpPath="${aabisBase}/fpsBase"
+   local fpsBaseFpPath="${aaisBase}/fpsBase"
    EH_assert [ -d "${fpsBaseFpPath}" ]
 
    local dateTag=$( DATE_nowTag )
    lpDo cp -p ${fpsBaseFpPath}/value ${fpsBaseFpPath}/value.${dateTag}
 
-   lpDo fileParamManage.py -i fileParamWrite "${aabisBase}" fpsBase "unassigned"
+   lpDo fileParamManage.py -i fileParamWrite "${aaisBase}" fpsBase "unassigned"
 }
 
-function vis_aabis_unAssignAndPush {
+function vis_aais_unAssignAndPush {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisBase="$1"
-   EH_assert [ ! -z "${aabisBase}" ]
+   local aaisBase="$1"
+   EH_assert [ ! -z "${aaisBase}" ]
 
-   lpDo vis_aabis_UnAssign "${boxId}"
+   lpDo vis_aais_UnAssign "${boxId}"
 
-   lpDo eval echo ${aabisBase} \| bx-gitRepos -i addCommitPush all
+   lpDo eval echo ${aaisBase} \| bx-gitRepos -i addCommitPush all
 }
 
 
-function vis_aabis_serviceTypeAssignToFpsBase {
+function vis_aais_serviceTypeAssignToFpsBase {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -315,7 +315,7 @@ _EOF_
    case "${serviceType}" in
        ByName|BySmb|ByFamily|ByDomain)
            EH_assert [ ! -z "${fpsBase}" ]
-           existingBase=$(lpDo vis_aabis_forFpsBaseFindAssignBase ${fpsBase})
+           existingBase=$(lpDo vis_aais_forFpsBaseFindAssignBase ${fpsBase})
            ;;
 
        *)
@@ -333,19 +333,19 @@ _EOF_
        fi
    fi
    
-   local aabisNu=$(lpDo vis_aabis_assignNuGetNext)
-   EH_assert [ ! -z "${aabisNu}" ]   
+   local aaisNu=$(lpDo vis_aais_assignNuGetNext)
+   EH_assert [ ! -z "${aaisNu}" ]   
 
-   local aabisBase=$(lpDo vis_aabis_assignUpdate_atNu "${aabisNu}")
-   EH_assert [ ! -z "${aabisBase}" ]      
+   local aaisBase=$(lpDo vis_aais_assignUpdate_atNu "${aaisNu}")
+   EH_assert [ ! -z "${aaisBase}" ]      
 
-   echo "${aabisBase}"
+   echo "${aaisBase}"
 
    lpReturn
 }       
 
 
-function vis_aabis_assignNuGetNext {
+function vis_aais_assignNuGetNext {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** LastId +1
@@ -355,7 +355,7 @@ _EOF_
    EH_assert [[ $# -eq 0 ]]
    EH_assert [ ! -z "${serviceType}" ]
 
-   local assignsBase=$(vis_aabis_registrarAssignBaseObtain)
+   local assignsBase=$(vis_aais_registrarAssignBaseObtain)
    EH_assert [ ! -z "${assignsBase}" ]
 
    local serviceTypeBase="${assignsBase}/${serviceType}"
@@ -373,7 +373,7 @@ _EOF_
    echo ${nextId}   
 }
 
-function vis_aabis_forFpsBaseFindAssignBase {
+function vis_aais_forFpsBaseFindAssignBase {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -382,7 +382,7 @@ _EOF_
    EH_assert [[ $# -eq 1 ]]
    local fpsBase="$1"
 
-   local assignBase=$(vis_aabis_registrarAssignBaseObtain)
+   local assignBase=$(vis_aais_registrarAssignBaseObtain)
    EH_assert [ ! -z "${assignBase}" ] 
 
    local fpsBaseIdFps=$( find ${assignBase} -type d -print | sort -n | grep fpsBase )
@@ -419,85 +419,85 @@ _EOF_
 }       
 
 
-function vis_aabis_assignUpdate_atNu {
+function vis_aais_assignUpdate_atNu {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
-   local aabisNu="$1"
+   local aaisNu="$1"
 
    EH_assert [ ! -z "${fpsBase}" ]
 
    local serviceType="$(lpDo fileParamManage.py -i fileParamRead "${fpsBase}" serviceType)"
 
-   local assignsBase=$(vis_aabis_registrarAssignBaseObtain)
+   local assignsBase=$(vis_aais_registrarAssignBaseObtain)
    EH_assert [ ! -z "${assignsBase}" ]
 
    local serviceTypeBase="${assignsBase}/${serviceType}"
    EH_assert [ -d "${serviceTypeBase}" ]
 
-   local aabisBase="${serviceTypeBase}/${aabisNu}"
+   local aaisBase="${serviceTypeBase}/${aaisNu}"
 
-   if [ -d "${aabisBase}" ] ; then
-       ANT_raw "aabisBase=${aabisBase} is in place, updating"
+   if [ -d "${aaisBase}" ] ; then
+       ANT_raw "aaisBase=${aaisBase} is in place, updating"
    else
-       ANT_raw "aabisBase=${aabisBase} missing, creating"
-       lpDo mkdir -p ${aabisBase}
+       ANT_raw "aaisBase=${aaisBase} missing, creating"
+       lpDo mkdir -p ${aaisBase}
    fi
-   EH_assert [ -d "${aabisBase}" ]
+   EH_assert [ -d "${aaisBase}" ]
 
-   local aabisId=$( vis_aabis_withNuGetId ${aabisNu} )
-   local stored_aabisId=$( fileParamManage.py -i fileParamRead  ${aabisBase} aabisId )
+   local aaisId=$( vis_aais_withNuGetId ${aaisNu} )
+   local stored_aaisId=$( fileParamManage.py -i fileParamRead  ${aaisBase} aaisId )
 
-   if [ -z "${stored_aabisId}" ] ; then
-       lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisId "${aabisId}"
+   if [ -z "${stored_aaisId}" ] ; then
+       lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisId "${aaisId}"
    else
-       if [ "${aabisId}" != "${stored_aabisId}" ] ; then
-           EH_problem "Expected ${aabisId} -- got ${stored_aabisId} -- Updating it."
-           lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisId "${aabisId}"
+       if [ "${aaisId}" != "${stored_aaisId}" ] ; then
+           EH_problem "Expected ${aaisId} -- got ${stored_aaisId} -- Updating it."
+           lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisId "${aaisId}"
        else
-           ANT_cooked "aabisId=${aabisId} -- No action taken"
+           ANT_cooked "aaisId=${aaisId} -- No action taken"
        fi
    fi
 
-   local aabisBpoId=pmi_$( vis_aabis_withNuGetId ${aabisNu} )
-   local stored_aabisBpoId=$( fileParamManage.py -i fileParamRead  ${aabisBase} aabisBpoId )
+   local aaisBpoId=pmi_$( vis_aais_withNuGetId ${aaisNu} )
+   local stored_aaisBpoId=$( fileParamManage.py -i fileParamRead  ${aaisBase} aaisBpoId )
 
-   if [ -z "${stored_aabisBpoId}" ] ; then
-       lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisBpoId "${aabisBpoId}"
+   if [ -z "${stored_aaisBpoId}" ] ; then
+       lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisBpoId "${aaisBpoId}"
    else
-       if [ "${aabisBpoId}" != "${stored_aabisBpoId}" ] ; then
-           EH_problem "Expected ${aabisBpoId} -- got ${stored_aabisBpoId} -- Updating it."
-           lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisBpoId "${aabisBpoId}"
+       if [ "${aaisBpoId}" != "${stored_aaisBpoId}" ] ; then
+           EH_problem "Expected ${aaisBpoId} -- got ${stored_aaisBpoId} -- Updating it."
+           lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisBpoId "${aaisBpoId}"
        else
-           ANT_cooked "aabisBpoId=${aabisBpoId} -- No action taken"
+           ANT_cooked "aaisBpoId=${aaisBpoId} -- No action taken"
        fi
    fi
 
 
-   local stored_aabisNu=$( fileParamManage.py -i fileParamRead  ${aabisBase} aabisNu )
+   local stored_aaisNu=$( fileParamManage.py -i fileParamRead  ${aaisBase} aaisNu )
 
-   if [ -z "${stored_aabisNu}" ] ; then
-       lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisNu "${aabisNu}"
+   if [ -z "${stored_aaisNu}" ] ; then
+       lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisNu "${aaisNu}"
    else
-       if [ "${aabisNu}" != "${stored_aabisNu}" ] ; then
-           EH_problem "Expected ${aabisNu} -- got ${stored_aabisNu} -- Updating it."
-           lpDo fileParamManage.py -i fileParamWrite ${aabisBase} aabisNu "${aabisNu}"
+       if [ "${aaisNu}" != "${stored_aaisNu}" ] ; then
+           EH_problem "Expected ${aaisNu} -- got ${stored_aaisNu} -- Updating it."
+           lpDo fileParamManage.py -i fileParamWrite ${aaisBase} aaisNu "${aaisNu}"
        else
-           ANT_cooked "aabisNu=${aabisNu} -- No action taken"
+           ANT_cooked "aaisNu=${aaisNu} -- No action taken"
        fi
    fi
    
-   lpDo fileParamManage.py -i fileParamWrite ${aabisBase} serviceType "${serviceType}"
-   lpDo fileParamManage.py -i fileParamWrite ${aabisBase} fpsBase "${fpsBase}"
+   lpDo fileParamManage.py -i fileParamWrite ${aaisBase} serviceType "${serviceType}"
+   lpDo fileParamManage.py -i fileParamWrite ${aaisBase} fpsBase "${fpsBase}"
 
-   echo ${aabisBase}
+   echo ${aaisBase}
 
    lpReturn
 }       
 
-function vis_aabis_withAssignBaseReadFileParam {
+function vis_aais_withAssignBaseReadFileParam {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -510,7 +510,7 @@ _EOF_
    local result=""
 
    case "${paramName}" in
-       fpsBase|serviceType|aabisNu|aabisId|aabisBpoId)
+       fpsBase|serviceType|aaisNu|aaisId|aaisBpoId)
            result=$(lpDo fileParamManage.py -i fileParamRead ${assignBase} "${paramName}")
            EH_assert [ ! -z "${result}" ]
            ;;
@@ -522,63 +522,63 @@ _EOF_
    lpDo echo "${result}"
 }
 
-function vis_aabis_withAssignBaseGet_fpsBase {
+function vis_aais_withAssignBaseGet_fpsBase {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
-   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
-   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+   local paramName=${FUNCNAME##vis_aais_withAssignBaseGet_}
+   lpDo vis_aais_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
 
-function vis_aabis_withAssignBaseGet_serviceType {
+function vis_aais_withAssignBaseGet_serviceType {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
-   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
-   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+   local paramName=${FUNCNAME##vis_aais_withAssignBaseGet_}
+   lpDo vis_aais_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
 
-function vis_aabis_withAssignBaseGet_aabisNu {
+function vis_aais_withAssignBaseGet_aaisNu {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
-   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
-   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+   local paramName=${FUNCNAME##vis_aais_withAssignBaseGet_}
+   lpDo vis_aais_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
 
-function vis_aabis_withAssignBaseGet_aabisId {
+function vis_aais_withAssignBaseGet_aaisId {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
-   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
-   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+   local paramName=${FUNCNAME##vis_aais_withAssignBaseGet_}
+   lpDo vis_aais_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
 
-function vis_aabis_withAssignBaseGet_aabisBpoId {
+function vis_aais_withAssignBaseGet_aaisBpoId {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
-   local paramName=${FUNCNAME##vis_aabis_withAssignBaseGet_}
-   lpDo vis_aabis_withAssignBaseReadFileParam ${assignBase} ${paramName}
+   local paramName=${FUNCNAME##vis_aais_withAssignBaseGet_}
+   lpDo vis_aais_withAssignBaseReadFileParam ${assignBase} ${paramName}
 }
 
 
-function vis_aabis_withAssignBaseReport {
+function vis_aais_withAssignBaseReport {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -586,9 +586,9 @@ _EOF_
    EH_assert [[ $# -eq 1 ]]
    local assignBase="$1"
 
-   local aabisId=$(vis_aabis_withAssignBaseGet_aabisId ${assignBase})
+   local aaisId=$(vis_aais_withAssignBaseGet_aaisId ${assignBase})
    
-   ANT_raw "aabisId=${aabisId}"
+   ANT_raw "aaisId=${aaisId}"
 
    ANT_raw "${assignBase}"
    

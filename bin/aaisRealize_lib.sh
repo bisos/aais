@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ####+BEGIN: bx:bsip:bash/libLoadOnce :libName "auto"
-if [ -z "${aaisRealizationFPs_lib:-}" ] ; then
-    aaisRealizationFPs_lib="LOADED" ; TM_trace 7 "aaisRealizationFPs_lib :: Loading Library -- /bisos/git/auth/bxRepos/bisos/bsip4/bin/aaisRealizationFPs_lib.sh"
+if [ -z "${aaisByStarRealize_lib:-}" ] ; then
+    aaisByStarRealize_lib="LOADED" ; TM_trace 7 "aaisByStarRealize_lib :: Loading Library -- /bisos/bsip/bin/aaisByStarRealize_lib.sh"
 else
-    TM_trace 7 "aaisRealizationFPs_lib :: Prviously Loaded -- Skipping /bisos/git/auth/bxRepos/bisos/bsip4/bin/aaisRealizationFPs_lib.sh" ; return
+    TM_trace 7 "aaisByStarRealize_lib :: Prviously Loaded -- Skipping /bisos/bsip/bin/aaisByStarRealize_lib.sh" ; return
 fi
 ####+END:
 
@@ -27,7 +27,7 @@ function vis_moduleDescription {  cat  << _EOF_
 **  [[elisp:(org-cycle)][| ]]  Panel        :: [[file:/libre/ByStar/InitialTemplates/activeDocs/bxServices/versionControl/fullUsagePanel-en.org::Xref-VersionControl][Panel Roadmap Documentation]] [[elisp:(org-cycle)][| ]]
 *  [[elisp:(org-cycle)][| ]]  Info          :: *[Module Description:]* [[elisp:(org-cycle)][| ]]
 ** 
-** Creates a FPs base for AAIS realization based on command line.
+** Creates a BARC (Bystar Account Request Aabis) based on command line.
 ** E|
 _EOF_
 }
@@ -46,139 +46,102 @@ _CommentBegin_
 _CommentEnd_
 
 
+function vis_aais_byname_assignAndRealize { serviceType=ByName; lpDo vis_aais_assignAndRealize; }
 
-function vis_aais_realizationFPsRepoCreate {
+
+function vis_aais_assignAndFullRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Dispatches to BoxRealize or to VirtRealize.
 _EOF_
                       }
-   EH_assert [[ $# -lt 2 ]]
+   EH_assert [[ $# -eq 0 ]]
 
-   EH_assert bxoIdPrep
+   EH_assert [ ! -z "${fpsBase}" ]
 
-   local repoName=""
-   if [ $# -eq 0 ] ; then
-       repoName="realizationFPs"
-   else
-       repoName="$1"
-   fi
+   # Realize a new BxO based on fpsBase
+   # 
+   local thisBxo=$(lpDo vis_aais_assignAndBasicBxoRealize)
+   EH_assert [ ! -z "${thisBxo}" ]
 
-   local repoBase="${bxoHome}/${repoName}"
+   lpDo bpoIdPrep ${thisBxo}
+   bpoId=${thisBxo}
+   
+   # vis_aais_nonRepoBasesFullCreate should be run before vis_aais_repoBasesFullCreate
+   #
+   lpDo vis_aais_nonRepoBasesAllCreate # Creates symlinks in ~bxo   
 
-   lpDo FN_dirCreatePathIfNotThere "${repoBase}"
+   lpDo vis_aais_repoBasesAllCreate
+   lpDo vis_aais_repoBasesAllPush   
+}       
 
-   lpDo eval cat  << _EOF_  \> "${repoBase}/README.org"
-BxO Repo: ${repoBase}
-for now just a place holder.
-_EOF_
 
-   lpDo bx-gitRepos -h -v -n showRun -i baseUpdateDotIgnore "${repoBase}"
-
-   lpReturn
-}
-
-function vis_aais_realizationFPsRepoPush {
+function vis_aais_assignAndBasicBxoRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Dispatches to BoxRealize or to VirtRealize.
 _EOF_
                       }
-   EH_assert [[ $# -lt 2 ]]
+   EH_assert [[ $# -eq 0 ]]
 
-   EH_assert bxoIdPrep
+   EH_assert [ ! -z "${fpsBase}" ]
 
-   local repoName=""
-   if [ $# -eq 0 ] ; then
-       repoName="realizationFPs"
-   else
-       repoName="$1"
-   fi
+   local serviceType="$(lpDo fileParamManage.py -i fileParamRead "${fpsBase}" serviceType)"
 
-   lpDo eval echo ${repoName} \| vis_bxoRealize_repoBasesPush
-
-   lpReturn
-}
-
-function vis_aais_realizationFPsRepoCreateAndPush {
-   G_funcEntry
-   function describeF {  G_funcEntryShow; cat  << _EOF_
-** Dispatches to BoxRealize or to VirtRealize.
-_EOF_
-                      }
-   EH_assert [[ $# -lt 2 ]]
-
-   EH_assert bxoIdPrep
-
-   lpDo vis_aais_realizationFPsRepoCreate $@
-   lpDo vis_aais_realizationFPsRepoPush $@
-
-   lpReturn
-}
-
-
-function vis_realizationFPsProcess {
-   G_funcEntry
-   function describeF {  G_funcEntryShow; cat  << _EOF_
-**
-_EOF_
-                      }
-   EH_assert [[ $# -eq 1 ]]
-
-   local action=$1
-
-   EH_assert [ ! -z "${fpsRoot}" ]
-   EH_assert [ ! -z "${serviceType}" ]
-
-   local fpsBase=$( FN_absolutePathGet ${fpsRoot} )
-
-   fpsBase=${fpsBase}/${serviceType}
-
+   local assignBase=""
+   local thisBxoId=""
+   
    case "${serviceType}" in
-       ByName|BySmb|ByFamily)
-           EH_assert [ ! -z "${correspondingBxo}" ]
-           assignBase=$(lpDo vis_aabis_serviceTypeAssignToCorrespondingBxo)
+       ByName|BySmb|ByFamily|ByDomain)
+           EH_assert [ ! -z "${fpsBase}" ]
+           assignBase=$(lpDo vis_aais_serviceTypeAssignToFpsBase)
            EH_assert [ ! -z "${assignBase}" ]
            
-           thisBxoId=$(lpDo vis_aabis_withAssignBaseBasicBxoRealize ${assignBase})
+           thisBxoId=$(lpDo vis_aais_withAssignBaseBasicBxoRealize ${assignBase})
            EH_assert [ ! -z "${thisBxoId}" ]
-           ;;
-       ByDomain)
-           EH_assert [ ! -z "${fqdnRoot}" ]
-
-           lpDo fqdnToArray ${fqdnRoot}
-           set ${fqdnArrayReverse[@]}
-
-           for each in ${fqdnArrayReverse[@]} ; do
-               fpsBase=${fpsBase}/${each}
-           done
            ;;
        *)
            EH_problem "Bad Usage -- serviceType=${serviceType}"
            ;;
    esac
 
-   case "${action}" in
-       update)
-           lpDo mkdir -p ${fpsBase}
-           lpDo fileParamManage.py -i fileParamWrite "${fpsBase}" serviceType "${serviceType}"
-           lpDo fileParamManage.py -i fileParamWrite "${fpsBase}" fqdnRoot "${fqdnRoot}"
-           lpDo fileParamManage.py -i fileParamWrite "${fpsBase}" updateDate "$(date)"
-           ;;
-       fpsBase)
-           lpDo echo ${fpsBase}
-           ;;
-       readDeep)
-           lpDo fileParamManage.py -i fileParamDictReadDeep ${fpsBase}
+   echo "${thisBxoId}"
+}       
+
+function vis_aais_assignAndGetBxoId {
+   G_funcEntry
+   function describeF {  G_funcEntryShow; cat  << _EOF_
+**
+_EOF_
+                      }
+   EH_assert [[ $# -eq 0 ]]
+
+   EH_assert [ ! -z "${fpsBase}" ]
+
+   local serviceType="$(lpDo fileParamManage.py -i fileParamRead "${fpsBase}" serviceType)"
+
+   local assignBase=""
+   local thisBxoId=""
+
+   case "${serviceType}" in
+       ByName|BySmb|ByFamily|ByDomain)
+           EH_assert [ ! -z "${fpsBase}" ]
+           assignBase=$(lpDo vis_aais_serviceTypeAssignToFpsBase)
+           EH_assert [ ! -z "${assignBase}" ]
+
+           thisBxoId=$(lpDo vis_aais_withAssignBaseGetBxoId ${assignBase})
+           EH_assert [ ! -z "${thisBxoId}" ]
            ;;
        *)
-           EH_problem "Bad Usage -- action=${action}"
+           EH_problem "Bad Usage -- serviceType=${serviceType}"
            ;;
    esac
+
+   echo "${thisBxoId}"
 }
 
 
-function vis_aabis_withAssignBaseGetBxoId%% {
+function vis_aais_withAssignBaseGetBxoId {
         G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** \$1 is bxoRepoScope -- \$2 is path to siteAabisAssignBase 
@@ -187,13 +150,13 @@ _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
 
-   local aabisAssignBase=$1
-   EH_assert [ -d ${aabisAssignBase} ]
+   local aaisAssignBase=$1
+   EH_assert [ -d ${aaisAssignBase} ]
 
-   echo "$(vis_aabis_withAssignBaseGet_aabisBpoId ${aabisAssignBase})"
+   echo "$(vis_aais_withAssignBaseGet_aaisBpoId ${aaisAssignBase})"
 }
 
-function vis_aabis_withAssignBaseBasicBxoRealize {
+function vis_aais_withAssignBaseBasicBxoRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** \$1 is bxoRepoScope -- \$2 is path to siteAabisAssignBase 
@@ -202,33 +165,33 @@ _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
 
-   local aabisAssignBase=$1
-   EH_assert [ -d ${aabisAssignBase} ]
+   local aaisAssignBase=$1
+   EH_assert [ -d ${aaisAssignBase} ]
 
    local bxoRealizationScope="full" # NOTYET
    
-   #local aabisBxoId=$(vis_aabis_withAssignBaseGetBxoId "${aabisAssignBase}" )
-   local aabisBxoId=$(vis_aabis_withAssignBaseGet_aabisBpoId "${aabisAssignBase}")
-   EH_assert [ ! -z "${aabisBxoId}" ]
+   local aaisBxoId=$(vis_aais_withAssignBaseGetBxoId "${aaisAssignBase}" )
+   EH_assert [ ! -z "${aaisBxoId}" ]
 
-   local parentBxoId=$(vis_aabis_withAssignBaseGet_correspondingBxo "${aabisAssignBase}")
+   local fpsBase=$(vis_aais_withAssignBaseGet_fpsBase "${aaisAssignBase}")
+   local parentBxoId=$(lpDo bpoReposManage.sh -i bpoIdObtainForPath ${fpsBase})
    
-   local aabisId=$(vis_aabis_withAssignBaseGet_aabisId ${aabisAssignBase})  # used as name for provisioning
+   local aaisId=$(vis_aais_withAssignBaseGet_aaisId ${aaisAssignBase})  # used as name for provisioning
 
-   if vis_bxoAcctVerify "${aabisBxoId}" ; then
-       ANT_raw "${aabisBxoId} account exists, already realized -- provisioning skipped"
+   if vis_bxoAcctVerify "${aaisBxoId}" ; then
+       ANT_raw "${aaisBxoId} account exists, already realized -- provisioning skipped"
    else
-       ANT_raw "${aabisBxoId} will be realized"       
-       lpDo bxmeProvision.sh -h -v -n showRun -p privacy="priv" -p kind="materialization" -p type="aais" -p parent="${parentBxoId}" -p name="${aabisId}" -i startToPrivRealize ${bxoRealizationScope}
+       ANT_raw "${aaisBxoId} will be realized"       
+       lpDo bxmeProvision.sh -h -v -n showRun -p privacy="priv" -p kind="materialization" -p type="aais" -p parent="${parentBxoId}" -p name="${aaisId}" -i startToPrivRealize ${bxoRealizationScope}
    fi
 
-   bxoId="${aabisBxoId}"
-   EH_assert vis_bxoAcctVerify "${bxoId}"
+   bpoId="${aaisBxoId}"
+   EH_assert vis_bxoAcctVerify "${bpoId}"
 
-   echo "${bxoId}"
+   echo "${bpoId}"
 }
 
-function vis_aabis_repoBasesList {
+function vis_aais_repoBasesList {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -245,62 +208,62 @@ _EOF_
     lpReturn
 }
 
-function vis_aabis_nonRepoBasesList {
+function vis_aais_nonRepoBasesList {
     cat  << _EOF_
 var
 _EOF_
 }
 
-function vis_aabis_repoBasesAllCreate {
+function vis_aais_repoBasesAllCreate {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    lpDo eval vis_aabis_repoBasesList \| vis_bxoRealize_repoBasesCreate aabis
+    lpDo eval vis_aais_repoBasesList \| vis_bxoRealize_repoBasesCreate aais
 }       
 
-function vis_aabis_repoBasesAllPush {
+function vis_aais_repoBasesAllPush {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    lpDo eval vis_aabis_repoBasesList \| vis_bxoRealize_repoBasesPush
+    lpDo eval vis_aais_repoBasesList \| vis_bxoRealize_repoBasesPush
 }       
 
-function vis_aabis_nonRepoBasesAllCreate {
+function vis_aais_nonRepoBasesAllCreate {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    lpDo eval vis_aabis_nonRepoBasesList \| vis_bxoRealize_nonRepoBasesCreate aabis
+    lpDo eval vis_aais_nonRepoBasesList \| vis_bxoRealize_nonRepoBasesCreate aais
 }       
 
 
-function vis_aabis_nonRepoBaseCreate_var {
+function vis_aais_nonRepoBaseCreate_var {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
-Create /bisos/var/bxoId/${bxoId} and symlink to it.
+Create /bisos/var/bpoId/${bpoId} and symlink to it.
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    local baseName=${FUNCNAME##vis_aabis_nonRepoBaseCreate_}
-    local basePath="${bxoHome}/${baseName}"
+    local baseName=${FUNCNAME##vis_aais_nonRepoBaseCreate_}
+    local basePath="${bpoHome}/${baseName}"
     
-    local bisosVarBaseDir="/bisos/var/bxoId/${bxoId}"
+    local bisosVarBaseDir="/bisos/var/bpoId/${bpoId}"
 
     lpDo FN_dirCreatePathIfNotThere ${bisosVarBaseDir}
     
@@ -309,18 +272,18 @@ _EOF_
     lpReturn
 }       
 
-function vis_aabis_repoBaseCreate_panel { vis_repoBaseCreate_panel; }
+function vis_aais_repoBaseCreate_panel { vis_repoBaseCreate_panel; }
 
-function vis_aabis_repoBaseCreate_BAGP {
+function vis_aais_repoBaseCreate_BAGP {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    local repoName=${FUNCNAME##vis_aabis_repoBaseCreate_}
-    local repoBase="${bxoHome}/${repoName}"
+    local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
+    local repoBase="${bpoHome}/${repoName}"
 
     lpDo FN_dirCreatePathIfNotThere "${repoBase}"
 
@@ -337,16 +300,16 @@ _EOF_
     lpReturn
 }       
 
-function vis_aabis_repoBaseCreate_NSP {
+function vis_aais_repoBaseCreate_NSP {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    local repoName=${FUNCNAME##vis_aabis_repoBaseCreate_}
-    local repoBase="${bxoHome}/${repoName}"
+    local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
+    local repoBase="${bpoHome}/${repoName}"
 
     lpDo FN_dirCreatePathIfNotThere "${repoBase}"
 
@@ -363,17 +326,17 @@ _EOF_
     lpReturn
 }       
 
-function vis_aabis_repoBaseCreate_par_live {
+function vis_aais_repoBaseCreate_par_live {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                        }
     EH_assert [[ $# -eq 0 ]]
-    EH_assert bxoIdPrep
+    EH_assert bpoIdPrep
 
-    #local repoName=${FUNCNAME##vis_aabis_repoBaseCreate_}
+    #local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
     local repoName=par.live
-    local repoBase="${bxoHome}/${repoName}"
+    local repoBase="${bpoHome}/${repoName}"
 
     lpDo FN_dirCreatePathIfNotThere "${repoBase}"
 

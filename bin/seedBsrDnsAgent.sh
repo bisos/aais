@@ -127,7 +127,7 @@ $( examplesSeperatorSection "Initial Bxt Object Creation/Update" )
 bxtStartCommon.sh  -i startObjectUpdateInThere $( pwd )  # Auto Detect -- NOTYET
 $( examplesSeperatorSection "Service Capability: ${svcCapability}" )
 ${svcCapability}
-${svcCapability} -h -v -n showRun -p bystarUid=${isoId} -p sr=${sr} -i fullUpdate 
+${svcCapability} -h -v -n showRun -p bpoId=${isoId} -p sr=${sr} -i fullUpdate 
 $( examplesSeperatorSection "Seed Candidates" )
 ${G_myName} ${extraInfo} -i bisoBaseGetThere $( pwd )
 ${G_myName} ${extraInfo} -i bisoSrGetThere $( pwd )
@@ -188,13 +188,13 @@ _EOF_
 
 cat  << _EOF_
 $( examplesSeperatorChapter "Create/Update Web Service Realization Base" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart plone3
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSrGeneweb2} -i srBaseStart geneweb
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSrApache2Git} -i srBaseStart apache2 
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart plone3
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSrGeneweb2} -i srBaseStart geneweb
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSrApache2Git} -i srBaseStart apache2 
 $( examplesSeperatorChapter "Create/Update Mail Service Realization Base" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart qmail1_06
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart qmail1_06
 $( examplesSeperatorChapter "Create/Update Git Service Realization Base" )
-${G_myName} ${extraInfo} -p bystarUid=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart git
+${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srBaseStart git
 _EOF_
 }
 
@@ -258,7 +258,7 @@ _EOF_
             EH_problem "NOTYET"
             ;;
         "geneweb")
-            opDo bsrGenewebManage.sh -h -v -n showRun -p bystarUid=${bystarUid} -p sr=${sr} -i srBaseStart
+            opDo bsrGenewebManage.sh -h -v -n showRun -p bpoId=${bystarUid} -p sr=${sr} -i srBaseStart
             ;;
         *)
             EH_problem ""

@@ -1,5 +1,5 @@
-#!/bin/osmtKsh
-#!/bin/osmtKsh
+#!/bin/bash
+#!/bin/bash
 
 vis_bystarBarcHelp () {
   cat  << _EOF_

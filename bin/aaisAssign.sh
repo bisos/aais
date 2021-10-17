@@ -57,8 +57,8 @@ _CommentEnd_
 . ${opBinBase}/platformBases_lib.sh
 
 
-. ${opBinBase}/bxo_lib.sh
-. ${opBinBase}/bxoId_lib.sh
+. ${opBinBase}/bpo_lib.sh
+. ${opBinBase}/bpoId_lib.sh
 
 # ./lcnFileParams.libSh
 . ${opBinBase}/lcnFileParams.libSh
@@ -78,7 +78,7 @@ _CommentEnd_
 
 . ${opBinBase}/box_lib.sh
 
-. ${aaisBinBase}/aabisAssign_lib.sh
+. ${aaisBinBase}/aaisAssign_lib.sh
 
 
 # PRE parameters
@@ -100,7 +100,7 @@ function vis_examples {
 
     typeset examplesInfo="${extraInfo}"
 
-    local assignsBase=$(vis_aabis_registrarAssignBaseObtain)
+    local assignsBase=$(vis_aais_registrarAssignBaseObtain)
     EH_assert [ ! -z "${assignsBase}" ]
 
     local boxId=$( siteBoxAssign.sh -i thisBoxFindId )
@@ -110,8 +110,8 @@ function vis_examples {
 
     # local oneRealIndiv=$(cat /bxo/usg/bystar/bpos/real/realIndiv.bpoFp/value)
 
-    local oneFpsBase=$(aabisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
-    local oneAssignBase=$(vis_aabis_forFpsBaseFindAssignBase ${oneFpsBase})
+    local oneFpsBase=$(aaisRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
+    local oneAssignBase=$(vis_aais_forFpsBaseFindAssignBase ${oneFpsBase})
 
 
     visLibExamplesOutput ${G_myName}
@@ -119,42 +119,42 @@ function vis_examples {
     cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Assignment Bases Information" )
-${G_myName} ${extraInfo} -i aabis_registrarBaseObtain
-${G_myName} ${extraInfo} -i aabis_registrarAssignBaseObtain
+${G_myName} ${extraInfo} -i aais_registrarBaseObtain
+${G_myName} ${extraInfo} -i aais_registrarAssignBaseObtain
 ls -ld ${assignsBase}/*
 find ${assignsBase} -print
 $( examplesSeperatorChapter "Containers Bases Initializations" )
-${G_myName} ${extraInfo} -i aabis_registrarBaseDirsCreate    # INITIALIZATION -- create basis for nu assignments
+${G_myName} ${extraInfo} -i aais_registrarBaseDirsCreate    # INITIALIZATION -- create basis for nu assignments
 $( examplesSeperatorChapter "ServiceInitial To ServiceType Mapping" )
-${G_myName} ${extraInfo} -i aabis_withServiceLetterGetServiceType N # [NBFD]
-${G_myName} ${extraInfo} -i aabis_withServiceTypeGetServiceLetter ByName # ByName, BySmb, ByFamily, ByDomain
-${G_myName} ${extraInfo} -i aabis_withNuGetId 100001
-${G_myName} ${extraInfo} -i aabis_withIdGetAssignedBase ByN-100001 # [NBFD]
-${G_myName} ${extraInfo} -p serviceType=ByName -i aabis_withNuGetAssignedBase 100001
+${G_myName} ${extraInfo} -i aais_withServiceLetterGetServiceType N # [NBFD]
+${G_myName} ${extraInfo} -i aais_withServiceTypeGetServiceLetter ByName # ByName, BySmb, ByFamily, ByDomain
+${G_myName} ${extraInfo} -i aais_withNuGetId 100001
+${G_myName} ${extraInfo} -i aais_withIdGetAssignedBase ByN-100001 # [NBFD]
+${G_myName} ${extraInfo} -p serviceType=ByName -i aais_withNuGetAssignedBase 100001
 ${G_myName} ${extraInfo} -i fromContainerBaseGetContainerNu "${containerBase}"
 $( examplesSeperatorChapter "SET -- Assignment -- Primary Commands" )
-${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBase
-${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBase # FORCED
-${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBaseAndPush  # ASSIGN PRIMARY COMMAND
-${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_serviceTypeAssignToFpsBaseAndPush  # FORCED PRIMARY COMMAND
-${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aabis_assignUpdate_atNu 100001 # Internal
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aais_serviceTypeAssignToFpsBase
+${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aais_serviceTypeAssignToFpsBase # FORCED
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aais_serviceTypeAssignToFpsBaseAndPush  # ASSIGN PRIMARY COMMAND
+${G_myName} -f ${extraInfo} -p fpsBase=${oneFpsBase} -i aais_serviceTypeAssignToFpsBaseAndPush  # FORCED PRIMARY COMMAND
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i aais_assignUpdate_atNu 100001 # Internal
 $( examplesSeperatorChapter "UNSET -- Container Box Un Assignment" )
-${G_myName} ${extraInfo} -i aabis_UnAssign aabisBase
-${G_myName} ${extraInfo} -i aabis_UnAssignAndPush aabisBase
+${G_myName} ${extraInfo} -i aais_UnAssign aaisBase
+${G_myName} ${extraInfo} -i aais_UnAssignAndPush aaisBase
 $( examplesSeperatorChapter "GIT -- Synchronization" )
-echo aabisBase | bx-gitRepos -i addCommitPush all
+echo aaisBase | bx-gitRepos -i addCommitPush all
 ${G_myName} ${extraInfo} -i aabos_ssignBasePull
 $( examplesSeperatorChapter "GET -- Container Nu" )
-${G_myName} ${extraInfo} -p serviceType=ByName -i aabis_assignNuGetNext
-${G_myName} ${extraInfo} -i aabis_forFpsBaseFindAssignBase ${oneFpsBase}  # INFO PRIMARY COMMAND
-${G_myName} -i aabis_withAssignBaseReport ${oneAssignBase} # INFO PRIMARY COMMAND -- FPs-readDeep
+${G_myName} ${extraInfo} -p serviceType=ByName -i aais_assignNuGetNext
+${G_myName} ${extraInfo} -i aais_forFpsBaseFindAssignBase ${oneFpsBase}  # INFO PRIMARY COMMAND
+${G_myName} -i aais_withAssignBaseReport ${oneAssignBase} # INFO PRIMARY COMMAND -- FPs-readDeep
 $( examplesSeperatorChapter "GET -- Params" )
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_fpsBase ${oneAssignBase}
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_serviceType ${oneAssignBase}
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisNu ${oneAssignBase}
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisId ${oneAssignBase}
-${G_myName} ${extraInfo} -i aabis_withAssignBaseGet_aabisBpoId ${oneAssignBase}
-${G_myName} ${extraInfo} -i aabis_withAssignBaseReadFileParam ${oneAssignBase} aabisBpoId
+${G_myName} ${extraInfo} -i aais_withAssignBaseGet_fpsBase ${oneAssignBase}
+${G_myName} ${extraInfo} -i aais_withAssignBaseGet_serviceType ${oneAssignBase}
+${G_myName} ${extraInfo} -i aais_withAssignBaseGet_aaisNu ${oneAssignBase}
+${G_myName} ${extraInfo} -i aais_withAssignBaseGet_aaisId ${oneAssignBase}
+${G_myName} ${extraInfo} -i aais_withAssignBaseGet_aaisBpoId ${oneAssignBase}
+${G_myName} ${extraInfo} -i aais_withAssignBaseReadFileParam ${oneAssignBase} aaisBpoId
 _EOF_
 }
 

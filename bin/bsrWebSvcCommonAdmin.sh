@@ -112,7 +112,7 @@ _EOF_
 
     if [ ! -d /rsync ] ; then
         opDo sudo mkdir /rsync
-        opDo sudo chown lsipusr:employee /rsync
+        opDo sudo chown bystar:bisos /rsync
     fi
 
     if [ -d /rsync/node_modules ] ; then

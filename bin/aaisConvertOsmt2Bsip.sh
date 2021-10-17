@@ -90,7 +90,6 @@ $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Convert And Update" )
 $( examplesSeperatorSection "Current Dir And Below" )
 find . -type f -print | egrep '/ftoProc\.sh$' | wc
-find . -type f -print | grep -v ${G_myName} | ${G_myName} ${extraInfo} -i miscFix
 echo /bisos/panels/bisos-dev/_nodeBase_/fullUsagePanel-en.org | ${G_myName} ${extraInfo} -i miscFix
 find . -type f -print | egrep '/ftoProc\.sh$' | ${G_myName} ${extraInfo} -i commonAspects
 find . -type f -print | egrep '/ftoProc\.sh$' | bx-dblock -i dblockUpdateFiles
@@ -98,6 +97,8 @@ find . -type f -print | egrep '/ftoProc\.sh\.2020[0-9]+$' | wc
 $( examplesSeperatorSection "Current Dir" )
 ${G_myName} ${extraInfo} -i commonAspects *
 find . -type f -print | egrep './bss' | ${G_myName} ${extraInfo} -i commonAspects
+find . -type f -print | grep -v ${G_myName} | ${G_myName} -i commonAspects
+find . -type f -print | grep -v ${G_myName} | ${G_myName} -i miscFix
 $( examplesSeperatorSection "Report" )
 ${G_myName} ${extraInfo} -i report *
 find . -type f -print | egrep './bss' | ${G_myName} -i report
@@ -201,12 +202,11 @@ _EOF_
 
         cat ${each}.${eachDateTag} | \
             sed -e "s@\#\!/bin/osmtKsh@#!/bin/bash@g" \
-            -e "s@sr=@ss=@g" \
-            -e "s@bystarUid=@bxoId=@g" \
-            -e "s@bystarUidCentralPrep@bxoIdPrep@g" \
-            -e "s@bystarUidHome@bxoHome@g" \
+            -e "s@bystarUid=@bpoId=@g" \
+            -e "s@bystarUidCentralPrep@bpoIdPrep@g" \
+            -e "s@bystarUidHome@bpoHome@g" \
             -e "s@lsipusr:employee@bystar:bisos@g" \
-            -e "s@bxoIdCentralPrep@bxoIdPrep@g"  > ${each}
+            -e "s@bxoIdCentralPrep@bpoIdPrep@g"  > ${each}
         
         lpReturn 0
     }
@@ -256,7 +256,22 @@ _EOF_
         lpDo FN_fileSafeCopy "${each}" "${each}.${eachDateTag}"
 
         cat ${each}.${eachDateTag} | \
-            sed -e "s@subBxe@bxeTree@g" > ${each}
+            sed -e "s@subBxeIGNORE@bxeTreeIGNORE@g" \
+            -e "s@bxoId@bpoId@g" \
+            -e "s@bxoHome@bpoHome@g" \
+            -e "s@{opBinBase}/bxo@{opBinBase}/bpo@g" \
+            -e "s@bxoAcctManage.sh@bpoAcctManage.sh@g" \
+            -e "s@bxoActivate.sh@bpoActivate.sh@g" \
+            -e "s@bxoIdManage.sh@bpoIdManage.sh@g" \
+            -e "s@bxoLcntManage.sh@bpoLcntManage.sh@g" \
+            -e "s@bxoManage.sh@bpoManage.sh@g" \
+            -e "s@bxoPubGithubManage.sh@bpoPubGithubManage.sh@g" \
+            -e "s@bxoReports.sh@bpoReports.sh@g" \
+            -e "s@bxoReposManage.sh@bpoReposManage.sh@g" \
+            -e "s@bxoSiteDefaultCreate.sh@bpoSiteDefaultCreate.sh@g" \
+            -e "s@usgBxos.sh@usgBpos.sh@g" \
+            -e "s@usgBxoSshManage.sh@usgBpoSshManage.sh@g" \
+            -e "s@aabis@aais@g" > ${each}
         
         lpReturn 0
     }
