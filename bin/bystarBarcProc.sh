@@ -27,14 +27,14 @@ fi
 . ${opBinBase}/bystarLib.sh
 
 # /opt/public/osmt/bin/bystarBarc.libSh 
-. ${aaisBinBase}/bystarBarc.libSh
+. ${palsBinBase}/bystarBarc.libSh
 . ${opBinBase}/opDoAtAsLib.sh
 
 . ${opBinBase}/bystarHook.libSh
 
 # /opt/public/osmt/bin/bystarInfoBase.libSh 
-. ${aaisBinBase}/bystarInfoBase.libSh
-. ${aaisBinBase}/bystarNspLib.sh
+. ${palsBinBase}/bystarInfoBase.libSh
+. ${palsBinBase}/bystarNspLib.sh
 
 . ${opBinBase}/unisosAccounts_lib.sh
 . ${opBinBase}/bisosGroupAccount_lib.sh

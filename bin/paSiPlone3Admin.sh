@@ -23,7 +23,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedActions.bash]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bin/bystarPlone3Admin.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bin/bystarPlone3Admin.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedActions.bash -l $0 "$@"
@@ -412,7 +412,6 @@ _EOF_
 
     lpReturn
 }
-
 
 
 

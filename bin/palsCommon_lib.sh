@@ -1,25 +1,24 @@
 # -*- mode: sh; -*-
 
+fps_platformPlone3Base="/bisos/cur/platform/pals/plone3"
+
 # see bystarAcctInfo.sh for the paradigm
 
-function loadSiParams {
+function loadBpoParams {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
                        }
-    EH_assert [[ $# -eq 2 ]]
+    EH_assert [[ $# -eq 1 ]]
     local thisBpoId="$1"
-    local thisSi="$2"
 
     local tmpFile=/tmp/$$.JJ
 
-    lpDo eval siPlone3.py --bpoId=${thisBpoId} --si=${thisSi} -i siToBxBash \> ${tmpFile}
+    lpDo eval palsBpoManage.py --bpoId="${thisBpoId}" -i palsToBxBash \> ${tmpFile}
 
     lpDo source  ${tmpFile}
 
-    lpDo rm ${tmpFile}
-
-    #echo ${cp_acctNu}
+    #lpDo rm ${tmpFile}
 }
 
 
@@ -232,15 +231,8 @@ function bystarTargetModeGet {
   EH_assert [[ $# -eq 0 ]]
   EH_assert [[ "${bpoId}_" != "INVALID_" ]]
 
-  bpoIdHome=$( FN_absolutePathGet ~${bpoId} )
-
-  if [ -f  ${bpoIdHome}/par.live/targetMode.novc ] ; then
-      typeset thisTargetMode=$( cat ${bpoIdHome}/par.live/targetMode.novc )
-      echo ${thisTargetMode}
-  else
-      echo ""
-  fi
-}    
+  lpDo palsBaseLiveTargets.py --bpoId="${bpoId}" --cls="PalsBase_LiveTargets" -i bpoFpParamGetWithName palsLiveTargetMode
+}
    
 function vis_hereContainerPlone3ParamCapture {
     G_funcEntry
@@ -252,23 +244,7 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    if vis_reRunAsRoot ${G_thisFunc} $@ ; then lpReturn 1; fi;
-    
-    typeset userNameCapture=$( grep Username: /usr/local/Plone/zeocluster/adminPassword.txt | cut -d ":" -f 2 )
-    typeset passwordCapture=$( grep Password: /usr/local/Plone/zeocluster/adminPassword.txt | cut -d ":" -f 2 )
-
-    if [ -z "${userNameCapture}" ] ; then
-        EH_problem "Empty Username"
-        lpReturn 101
-    fi
-
-    if [ -z "${passwordCapture}" ] ; then
-        EH_problem "Empty Password"
-        lpReturn 101
-    fi
-
-    opDo eval "echo ${userNameCapture} > /libre/etc/platform/lcaPlone/platformPloneAdminUser"
-    opDo eval "echo ${passwordCapture} > /libre/etc/platform/lcaPlone/platformPloneAdminPasswd"
+    lpDo cntnrCurParams.py -v 20  -i hereContainerPlone3ParamCapture
 }
 
 function vis_hereContainerPlone3UserGet {
@@ -279,11 +255,12 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
-    if [ -s  /libre/etc/platform/lcaPlone/platformPloneAdminUser ] ; then
-        cat /libre/etc/platform/lcaPlone/platformPloneAdminUser
-    else
-        EH_problem "Missing or Empty: /libre/etc/platform/lcaPlone/platformPloneAdminUser"
+    local result=$( cntnrCurParams.py -v 30 --fpBase="/bisos/cur/cntnr/fps" --cls="PalsRepo_LiveParams_FPs"  -i fpParamGetWithName plone3User )
+
+    if [ -z "${result}" ] ; then
+        EH_problem "Missing or Empty: "
     fi
+    echo "${result}"
 }
 
 function vis_hereContainerPlone3PasswdGet {
@@ -294,12 +271,13 @@ _EOF_
     }
     EH_assert [[ $# -eq 0 ]]
 
+    local result=$( cntnrCurParams.py -v 30 --fpBase="/bisos/cur/cntnr/fps" --cls="PalsRepo_LiveParams_FPs"  -i fpParamGetWithName plone3Passwd )
 
-    if [ -s  /libre/etc/platform/lcaPlone/platformPloneAdminPasswd ] ; then
-        cat /libre/etc/platform/lcaPlone/platformPloneAdminPasswd
-    else
-        EH_problem "Missing or Empty: /libre/etc/platform/lcaPlone/platformPloneAdminPasswd"
+    if [ -z "${result}" ] ; then
+        EH_problem "Missing or Empty: "
     fi
+    echo "${result}"
+
 }
 
 

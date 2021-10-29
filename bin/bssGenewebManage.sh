@@ -28,7 +28,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedActions.bash]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bx/bin/bssGenewebManage.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bx/bin/bssGenewebManage.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedActions.bash -l $0 "$@"
@@ -134,7 +134,7 @@ typeset -t assignedUserIdNumber=""
 typeset -t RABE="MANDATORY"
 
 typeset -t ss=""      # Services Specifications
-typeset -t bpoId=""   # aaisBpo
+typeset -t bpoId=""   # palsBpo
 
 function G_postParamHook {
     if [ ! -z "${bpoId}" ] ; then
@@ -159,7 +159,7 @@ function vis_examples {
 
   #oneBystarAcct=$( echo ${acctsList} | head -1 )
   # oneBystarAcct=${currentBystarUid}
-  oneBystarAcct=aaisByDomain
+  oneBystarAcct=palsByDomain
   
   oneSr="iso/sr/geneweb/default"
 

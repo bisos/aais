@@ -100,14 +100,14 @@ _CommentEnd_
 
 . ${opBinBase}/siteNetworks_lib.sh
 
-. ${aaisBinBase}/aaisBxAssign_lib.sh
-. ${aaisBinBase}/aaisBxRealize_lib.sh
+. ${palsBinBase}/palsAssign_lib.sh
+. ${palsBinBase}/palsRealize_lib.sh
 
 # PRE parameters
 
 typeset -t bpoId=""
 
-typeset -t correspondingBxo=""
+typeset -t fpsBase=""
 
 
 function G_postParamHook {
@@ -138,9 +138,14 @@ function vis_examples {
 
     typeset examplesInfo="${extraInfo} ${runInfo}"
 
-    oneBxoId="${currentBxoId}"
-
     oneBxoRepoScope="basePrep"
+
+    local oneFpsBase=$(palsRealizationFPs.sh -p fpsRoot="~pip_palsDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
+
+    local fpsBase="${oneFpsBase}"
+    local oneBxoId="$(vis_pals_assignAndGetBxoId)"
+    local oneAssignBase=$(vis_pals_forFpsBaseFindAssignBase ${oneFpsBase})
+
 
     function repoBaseCreateAndPushExamples {
         EH_assert [[ $# -eq 2 ]]
@@ -148,7 +153,7 @@ function vis_examples {
         local description=$2
         cat  << _EOF_
 $( examplesSeperatorSubSection "${description}" )
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_repoBaseCreate_${repoName}
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_repoBaseCreate_${repoName}
 ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_repoBasesPush ${repoName}
 _EOF_
     }   
@@ -159,7 +164,7 @@ _EOF_
         local description=$2
         cat  << _EOF_
 $( examplesSeperatorSubSection "${description}" )
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_nonRepoBaseCreate_${repoName}
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_nonRepoBaseCreate_${repoName}
 _EOF_
     }   
 
@@ -174,29 +179,29 @@ _EOF_
     
     cat  << _EOF_
 $( examplesSeperatorTopLabel "${G_myName}" )
-$( examplesSeperatorChapter "Site Container Bases" )
-${G_myName} ${extraInfo} -p serviceType=ByName -p correspondingBxo=pri_mohsen_banan -i aais_assignAndBasicBxoRealize  # FULL ACTION -- PRIMARY COMMAND
-${G_myName} ${extraInfo} -p correspondingBxo=pri_mohsen_banan -i aais_byname_assignAndBasicBxoRealize
-${G_myName} ${extraInfo} -p serviceType=ByName -p correspondingBxo=pri_mohsen_banan -i aais_assignAndFullRealize  # FULL ACTION -- PRIMARY COMMAND
-$( examplesSeperatorChapter "Internal Functions For Basic BxO Realization" )
-${G_myName} ${extraInfo} -p serviceType=ByName -p correspondingBxo=pri_mohsen_banan -i aais_withAssignBaseRealize
+$( examplesSeperatorChapter "ByStar AAIS Assign And BPO Realize" )
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i pals_assignAndBasicBxoRealize  # BASIC ACTION -- PRIMARY COMMAND
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i pals_assignAndFullRealize  # FULL ACTION -- PRIMARY COMMAND
+$( examplesSeperatorChapter "Obtain BpoId" )
+${G_myName} ${extraInfo} -p fpsBase=${oneFpsBase} -i pals_assignAndGetBxoId
+${G_myName} ${extraInfo} -i pals_withAssignBaseGetBxoId ${oneAssignBase}
 _EOF_
 
     cat  << _EOF_
 $( examplesSeperatorChapter "Specific Initial Repo Realizition" )
 $( examplesSeperatorSection "Repo Bases List And Create -- Realizition" )
-${G_myName} ${extraInfo} -i aais_repoBasesList
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_repoBasesAllCreate
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_repoBasesAllPush
-${G_myName} -i aais_repoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_repoBasesCreate aais
+${G_myName} ${extraInfo} -i pals_repoBasesList
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_repoBasesAllCreate
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_repoBasesAllPush
+${G_myName} -i pals_repoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_repoBasesCreate pals
 $( repoBaseCreateAndPushExamples panel "Panel Repo (Basic Panel)" )
 $( repoBaseCreateAndPushExamples BAGP "Repo" )
 $( repoBaseCreateAndPushExamples NSP "Repo" )
 $( repoBaseCreateAndPushExamples par_live "Repo" )
 $( examplesSeperatorSection "Non Repo Bases List And Create -- Realizition" )
-${G_myName} ${extraInfo} -i aais_nonRepoBasesList
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_nonRepoBasesAllCreate
-${G_myName} -i aais_nonRepoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_nonRepoBasesCreate aais
+${G_myName} ${extraInfo} -i pals_nonRepoBasesList
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_nonRepoBasesAllCreate
+${G_myName} -i pals_nonRepoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_nonRepoBasesCreate pals
 $( nonRepoBaseCreateAndPushExamples var "Var BaseDir Link" )
 _EOF_
 

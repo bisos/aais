@@ -24,7 +24,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedActions.bash]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bx/bin/bssApache2Cap.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bx/bin/bssApache2Cap.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedActions.bash -l $0 "$@"
@@ -118,7 +118,7 @@ typeset -t assignedUserIdNumber=""
 # typeset -t bpoId="MANDATORY"
 
 typeset -t ss=""      # Services Specifications
-typeset -t bpoId=""   # aaisBpo
+typeset -t bpoId=""   # palsBpo
 
 function G_postParamHook {
     if [ ! -z "${bpoId}" ] ; then
@@ -143,7 +143,7 @@ function vis_examples {
 
   #oneBystarAcct=$( echo ${acctsList} | head -1 )
   # currentBystarUid=NOTYET
-  oneBystarAcct=aaisByDomain
+  oneBystarAcct=palsByDomain
 
   #oneSs="iso/sr/geneweb/default/a2VirDoms/main"
   #oneSs="so/sr/apache2/web3"
@@ -156,7 +156,7 @@ $( examplesSeperatorChapter "Full Actions" )
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate svcCapabilityFlavor svcName svcFqdn
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i startAndFullUpdate generic docBySource doc.bysource.org
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i fullUpdate
-${G_myName} ${extraInfo} -p bpoId=aaisByDomain -p ss=${oneSs} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=palsByDomain -p ss=${oneSs} -i fullUpdate
 $( examplesSeperatorChapter "Initial Apache2 Content" )
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p ss=${oneSs} -i initialContentStdout generic

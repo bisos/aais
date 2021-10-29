@@ -24,7 +24,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedBxtCommon.sh]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bx/bin/bxtStartBsr.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bx/bin/bxtStartBsr.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedBxtCommon.sh -l $0 "$@"

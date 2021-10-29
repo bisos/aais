@@ -5,7 +5,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedActions.bash]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bin/bystarPlone3Admin.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bin/bystarPlone3Admin.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedActions.bash -l $0 "$@"
@@ -60,14 +60,14 @@ _EOF_
 
 # bystarHereAcct.libSh
 #. ${opBinBase}/bystarHereAcct.libSh
-. ${aaisBinBase}/aaisCommon_lib.sh
+. ${palsBinBase}/palsCommon_lib.sh
 
 # PRE parameters
 typeset -t acctTypePrefix=""
 # typeset -t bpoId=""
 
 typeset -t si=""      # Service Instance
-typeset -t bpoId=""   # aaisBpo
+typeset -t bpoId=""   # palsBpo
 
 
 function G_postParamHook {
@@ -99,7 +99,8 @@ function vis_examples {
   typeset thisAcctTypePrefix="sa"
   #typeset thisOneSaNu="sa-20051"
   #typeset thisOneSaNu=${oneBystarAcct}
-  typeset thisOneSaNu=aaisByDomain
+  #typeset thisOneSaNu=palsByDomain
+  typeset thisOneSaNu=pmi_ByD-100001
   typeset oneSubject="qmailAddr_test"
 
 
@@ -258,11 +259,11 @@ _EOF_
     EH_assert [ -n "${bpoId}" ]
     EH_assert [ -n "${si}" ]
 
-    lpDo loadSiParams "${bpoId}" "${si}"
+    lpDo loadBpoParams "${bpoId}"
 
     lpDo bystarPlone3ContainerZopeParamsPrep
 
-    opDo echo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} ${containerZopeBaseUrl} \
+    opDo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} ${containerZopeBaseUrl} \
         /manage_addProduct/CMFPlone/addPloneSite \
         -d id=${cp_acctMainBaseDomain} \
         -d title=${cp_acctMainBaseDomain} \
@@ -301,14 +302,11 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    bystarBagpLoad
+    lpDo loadBpoParams "${bpoId}"
 
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-    opAcctInfoGet ${bpoId}
-
-    bystarDomainFormsPrep
-
-    ploneSiteName=${bystarDomFormTld}
+    ploneSiteName=${cp_acctMainBaseDomain}
 
     opDo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} http://${bystarDomFormTld_plone}:8080 \
         / \
@@ -325,28 +323,26 @@ function vis_ploneSitePrep {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    bystarBagpLoad
+    lpDo loadBpoParams "${bpoId}"
 
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-  opAcctInfoGet ${bpoId}
+    #vis_ploneSiteMailhost
 
-  #vis_ploneSiteMailhost
+    lpDo vis_ploneSiteSecurity
 
-  opDo vis_ploneSiteSecurity
-
-  opDo vis_ploneProductsAdd
+    lpDo vis_ploneProductsAdd
 }
 
 function vis_ploneSiteMailhost {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    bystarBagpLoad
+    lpDo loadBpoParams "${bpoId}"
 
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-    opAcctInfoGet ${bpoId}
-
-    bystarDomainFormsPrep
+    # bystarDomainFormsPrep
 
     ploneAuth=$( vis_ploneSiteAuthenticatorGet 2> /dev/null )
 
@@ -372,12 +368,11 @@ function vis_ploneSiteSecurity {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    bystarBagpLoad
+    lpDo loadBpoParams "${bpoId}"
 
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-    opAcctInfoGet ${bpoId}
-
-    bystarDomainFormsPrep
+    # bystarDomainFormsPrep
 
     ploneAuth=$( vis_ploneSiteAuthenticatorGet 2> /dev/null )
 
@@ -401,9 +396,9 @@ function vis_ploneManagerAdd {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    vis_ploneUserAdd
+    lpDo vis_ploneUserAdd
 
-    vis_ploneUserRoleSet # manager
+    lpDo vis_ploneUserRoleSet # manager
 }
 
 # /join_form last_visit%3Adate=2009%2F12%2F20+13%3A42%3A42.985+US%2FPacific&prev_visit%3Adate=2009%2F12%2F20+13%3A42%3A42.985+US%2FPacific&came_from_prefs=1&fullname=ea-01&username=ea01&email=mohsen.banan%40byname.net&password=changeme&password_confirm=changeme&mail_me=on&form.button.Register=Register&form.submitted=1&_authenticator=5d602059fad7ead4691a5cb7b17adfd3e4721358
@@ -412,18 +407,17 @@ function vis_ploneUserAdd {
     EH_assert [[ $# -eq 0 ]]
     EH_assert [[ "${bpoId}_" != "MANDATORY_" ]]
 
-    bystarBagpLoad
+    lpDo loadBpoParams "${bpoId}"
 
+    lpDo bystarPlone3ContainerZopeParamsPrep
 
-  opAcctInfoGet ${bpoId}
+    # bystarDomainFormsPrep
 
-  bystarDomainFormsPrep
+    ploneAuth=$( vis_ploneSiteAuthenticatorGet 2> /dev/null )
 
-  ploneAuth=$( vis_ploneSiteAuthenticatorGet 2> /dev/null )
-
-  echo ploneAuth=${ploneAuth}
+    echo ploneAuth=${ploneAuth}
   
- opDo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} http://${bystarDomFormTld_plone} \
+    opDo lcaPlone3UrlApi.sh ${containerZopeUser} ${containerZopePasswd} http://${bystarDomFormTld_plone} \
      /join_form \
      -d last_visit%3Adate=2009%2F12%2F20+13%3A42%3A42.985+US%2FPacific \
      -d prev_visit%3Adate=2009%2F12%2F20+13%3A42%3A42.985+US%2FPacific \

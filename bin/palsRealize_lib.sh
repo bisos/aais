@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ####+BEGIN: bx:bsip:bash/libLoadOnce :libName "auto"
-if [ -z "${aaisByStarRealize_lib:-}" ] ; then
-    aaisByStarRealize_lib="LOADED" ; TM_trace 7 "aaisByStarRealize_lib :: Loading Library -- /bisos/bsip/bin/aaisByStarRealize_lib.sh"
+if [ -z "${palsByStarRealize_lib:-}" ] ; then
+    palsByStarRealize_lib="LOADED" ; TM_trace 7 "palsByStarRealize_lib :: Loading Library -- /bisos/bsip/bin/palsByStarRealize_lib.sh"
 else
-    TM_trace 7 "aaisByStarRealize_lib :: Prviously Loaded -- Skipping /bisos/bsip/bin/aaisByStarRealize_lib.sh" ; return
+    TM_trace 7 "palsByStarRealize_lib :: Prviously Loaded -- Skipping /bisos/bsip/bin/palsByStarRealize_lib.sh" ; return
 fi
 ####+END:
 
@@ -46,10 +46,10 @@ _CommentBegin_
 _CommentEnd_
 
 
-function vis_aais_byname_assignAndRealize { serviceType=ByName; lpDo vis_aais_assignAndRealize; }
+function vis_pals_byname_assignAndRealize { serviceType=ByName; lpDo vis_pals_assignAndRealize; }
 
 
-function vis_aais_assignAndFullRealize {
+function vis_pals_assignAndFullRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Dispatches to BoxRealize or to VirtRealize.
@@ -61,22 +61,22 @@ _EOF_
 
    # Realize a new BxO based on fpsBase
    # 
-   local thisBxo=$(lpDo vis_aais_assignAndBasicBxoRealize)
+   local thisBxo=$(lpDo vis_pals_assignAndBasicBxoRealize)
    EH_assert [ ! -z "${thisBxo}" ]
 
    lpDo bpoIdPrep ${thisBxo}
    bpoId=${thisBxo}
    
-   # vis_aais_nonRepoBasesFullCreate should be run before vis_aais_repoBasesFullCreate
+   # vis_pals_nonRepoBasesFullCreate should be run before vis_pals_repoBasesFullCreate
    #
-   lpDo vis_aais_nonRepoBasesAllCreate # Creates symlinks in ~bxo   
+   lpDo vis_pals_nonRepoBasesAllCreate # Creates symlinks in ~bxo   
 
-   lpDo vis_aais_repoBasesAllCreate
-   lpDo vis_aais_repoBasesAllPush   
+   lpDo vis_pals_repoBasesAllCreate
+   lpDo vis_pals_repoBasesAllPush   
 }       
 
 
-function vis_aais_assignAndBasicBxoRealize {
+function vis_pals_assignAndBasicBxoRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** Dispatches to BoxRealize or to VirtRealize.
@@ -94,10 +94,10 @@ _EOF_
    case "${serviceType}" in
        ByName|BySmb|ByFamily|ByDomain)
            EH_assert [ ! -z "${fpsBase}" ]
-           assignBase=$(lpDo vis_aais_serviceTypeAssignToFpsBase)
+           assignBase=$(lpDo vis_pals_serviceTypeAssignToFpsBase)
            EH_assert [ ! -z "${assignBase}" ]
            
-           thisBxoId=$(lpDo vis_aais_withAssignBaseBasicBxoRealize ${assignBase})
+           thisBxoId=$(lpDo vis_pals_withAssignBaseBasicBxoRealize ${assignBase})
            EH_assert [ ! -z "${thisBxoId}" ]
            ;;
        *)
@@ -108,7 +108,7 @@ _EOF_
    echo "${thisBxoId}"
 }       
 
-function vis_aais_assignAndGetBxoId {
+function vis_pals_assignAndGetBxoId {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 **
@@ -126,10 +126,10 @@ _EOF_
    case "${serviceType}" in
        ByName|BySmb|ByFamily|ByDomain)
            EH_assert [ ! -z "${fpsBase}" ]
-           assignBase=$(lpDo vis_aais_serviceTypeAssignToFpsBase)
+           assignBase=$(lpDo vis_pals_serviceTypeAssignToFpsBase)
            EH_assert [ ! -z "${assignBase}" ]
 
-           thisBxoId=$(lpDo vis_aais_withAssignBaseGetBxoId ${assignBase})
+           thisBxoId=$(lpDo vis_pals_withAssignBaseGetBxoId ${assignBase})
            EH_assert [ ! -z "${thisBxoId}" ]
            ;;
        *)
@@ -141,7 +141,7 @@ _EOF_
 }
 
 
-function vis_aais_withAssignBaseGetBxoId {
+function vis_pals_withAssignBaseGetBxoId {
         G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** \$1 is bxoRepoScope -- \$2 is path to siteAabisAssignBase 
@@ -150,13 +150,13 @@ _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
 
-   local aaisAssignBase=$1
-   EH_assert [ -d ${aaisAssignBase} ]
+   local palsAssignBase=$1
+   EH_assert [ -d ${palsAssignBase} ]
 
-   echo "$(vis_aais_withAssignBaseGet_aaisBpoId ${aaisAssignBase})"
+   echo "$(vis_pals_withAssignBaseGet_palsBpoId ${palsAssignBase})"
 }
 
-function vis_aais_withAssignBaseBasicBxoRealize {
+function vis_pals_withAssignBaseBasicBxoRealize {
    G_funcEntry
    function describeF {  G_funcEntryShow; cat  << _EOF_
 ** \$1 is bxoRepoScope -- \$2 is path to siteAabisAssignBase 
@@ -165,33 +165,33 @@ _EOF_
                       }
    EH_assert [[ $# -eq 1 ]]
 
-   local aaisAssignBase=$1
-   EH_assert [ -d ${aaisAssignBase} ]
+   local palsAssignBase=$1
+   EH_assert [ -d ${palsAssignBase} ]
 
    local bxoRealizationScope="full" # NOTYET
    
-   local aaisBxoId=$(vis_aais_withAssignBaseGetBxoId "${aaisAssignBase}" )
-   EH_assert [ ! -z "${aaisBxoId}" ]
+   local palsBxoId=$(vis_pals_withAssignBaseGetBxoId "${palsAssignBase}" )
+   EH_assert [ ! -z "${palsBxoId}" ]
 
-   local fpsBase=$(vis_aais_withAssignBaseGet_fpsBase "${aaisAssignBase}")
+   local fpsBase=$(vis_pals_withAssignBaseGet_fpsBase "${palsAssignBase}")
    local parentBxoId=$(lpDo bpoReposManage.sh -i bpoIdObtainForPath ${fpsBase})
    
-   local aaisId=$(vis_aais_withAssignBaseGet_aaisId ${aaisAssignBase})  # used as name for provisioning
+   local palsId=$(vis_pals_withAssignBaseGet_palsId ${palsAssignBase})  # used as name for provisioning
 
-   if vis_bxoAcctVerify "${aaisBxoId}" ; then
-       ANT_raw "${aaisBxoId} account exists, already realized -- provisioning skipped"
+   if vis_bxoAcctVerify "${palsBxoId}" ; then
+       ANT_raw "${palsBxoId} account exists, already realized -- provisioning skipped"
    else
-       ANT_raw "${aaisBxoId} will be realized"       
-       lpDo bxmeProvision.sh -h -v -n showRun -p privacy="priv" -p kind="materialization" -p type="aais" -p parent="${parentBxoId}" -p name="${aaisId}" -i startToPrivRealize ${bxoRealizationScope}
+       ANT_raw "${palsBxoId} will be realized"       
+       lpDo bxmeProvision.sh -h -v -n showRun -p privacy="priv" -p kind="materialization" -p type="pals" -p parent="${parentBxoId}" -p name="${palsId}" -i startToPrivRealize ${bxoRealizationScope}
    fi
 
-   bpoId="${aaisBxoId}"
+   bpoId="${palsBxoId}"
    EH_assert vis_bxoAcctVerify "${bpoId}"
 
    echo "${bpoId}"
 }
 
-function vis_aais_repoBasesList {
+function vis_pals_repoBasesList {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -208,13 +208,13 @@ _EOF_
     lpReturn
 }
 
-function vis_aais_nonRepoBasesList {
+function vis_pals_nonRepoBasesList {
     cat  << _EOF_
 var
 _EOF_
 }
 
-function vis_aais_repoBasesAllCreate {
+function vis_pals_repoBasesAllCreate {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
@@ -223,10 +223,10 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    lpDo eval vis_aais_repoBasesList \| vis_bxoRealize_repoBasesCreate aais
+    lpDo eval vis_pals_repoBasesList \| vis_bxoRealize_repoBasesCreate pals
 }       
 
-function vis_aais_repoBasesAllPush {
+function vis_pals_repoBasesAllPush {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
@@ -235,10 +235,10 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    lpDo eval vis_aais_repoBasesList \| vis_bxoRealize_repoBasesPush
+    lpDo eval vis_pals_repoBasesList \| vis_bxoRealize_repoBasesPush
 }       
 
-function vis_aais_nonRepoBasesAllCreate {
+function vis_pals_nonRepoBasesAllCreate {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 ** 
@@ -247,11 +247,11 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    lpDo eval vis_aais_nonRepoBasesList \| vis_bxoRealize_nonRepoBasesCreate aais
+    lpDo eval vis_pals_nonRepoBasesList \| vis_bxoRealize_nonRepoBasesCreate pals
 }       
 
 
-function vis_aais_nonRepoBaseCreate_var {
+function vis_pals_nonRepoBaseCreate_var {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 Create /bisos/var/bpoId/${bpoId} and symlink to it.
@@ -260,7 +260,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    local baseName=${FUNCNAME##vis_aais_nonRepoBaseCreate_}
+    local baseName=${FUNCNAME##vis_pals_nonRepoBaseCreate_}
     local basePath="${bpoHome}/${baseName}"
     
     local bisosVarBaseDir="/bisos/var/bpoId/${bpoId}"
@@ -272,9 +272,9 @@ _EOF_
     lpReturn
 }       
 
-function vis_aais_repoBaseCreate_panel { vis_repoBaseCreate_panel; }
+function vis_pals_repoBaseCreate_panel { vis_repoBaseCreate_panel; }
 
-function vis_aais_repoBaseCreate_BAGP {
+function vis_pals_repoBaseCreate_BAGP {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -282,7 +282,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
+    local repoName=${FUNCNAME##vis_pals_repoBaseCreate_}
     local repoBase="${bpoHome}/${repoName}"
 
     lpDo FN_dirCreatePathIfNotThere "${repoBase}"
@@ -300,7 +300,7 @@ _EOF_
     lpReturn
 }       
 
-function vis_aais_repoBaseCreate_NSP {
+function vis_pals_repoBaseCreate_NSP {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -308,7 +308,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
+    local repoName=${FUNCNAME##vis_pals_repoBaseCreate_}
     local repoBase="${bpoHome}/${repoName}"
 
     lpDo FN_dirCreatePathIfNotThere "${repoBase}"
@@ -326,7 +326,7 @@ _EOF_
     lpReturn
 }       
 
-function vis_aais_repoBaseCreate_par_live {
+function vis_pals_repoBaseCreate_par_live {
     G_funcEntry
     function describeF {  G_funcEntryShow; cat  << _EOF_
 _EOF_
@@ -334,7 +334,7 @@ _EOF_
     EH_assert [[ $# -eq 0 ]]
     EH_assert bpoIdPrep
 
-    #local repoName=${FUNCNAME##vis_aais_repoBaseCreate_}
+    #local repoName=${FUNCNAME##vis_pals_repoBaseCreate_}
     local repoName=par.live
     local repoBase="${bpoHome}/${repoName}"
 

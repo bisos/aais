@@ -100,9 +100,9 @@ _CommentEnd_
 
 . ${opBinBase}/siteNetworks_lib.sh
 
-. ${aaisBinBase}/aaisAssign_lib.sh
-. ${aaisBinBase}/aaisRealize_lib.sh
-. ${aaisBinBase}/aaisRealizationFPs_lib.sh
+. ${palsBinBase}/palsAssign_lib.sh
+. ${palsBinBase}/palsRealize_lib.sh
+. ${palsBinBase}/palsRealizationFPs_lib.sh
 
 # PRE parameters
 
@@ -140,7 +140,7 @@ function vis_examples {
     typeset examplesInfo="${extraInfo} ${runInfo}"
 
     #oneBxoId="${currentBxoId}"
-    oneBxoId="pip_aaisDevExamples"
+    oneBxoId="pip_palsDevExamples"
 
     oneBxoRepoScope="basePrep"
 
@@ -150,12 +150,12 @@ function vis_examples {
         local description=$2
         cat  << _EOF_
 $( examplesSeperatorSubSection "${description}" )
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoCreate    # default repo = realizationFPs
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoCreate ${repoName}
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoPush    # default repo = realizationFPs
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoPush ${repoName}
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoCreateAndPush    # default repo = realizationFPs
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_realizationFPsRepoCreateAndPush ${repoName}
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoCreate    # default repo = realizationFPs
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoCreate ${repoName}
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoPush    # default repo = realizationFPs
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoPush ${repoName}
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoCreateAndPush    # default repo = realizationFPs
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_realizationFPsRepoCreateAndPush ${repoName}
 _EOF_
     }   
 
@@ -184,18 +184,18 @@ _EOF_
     cat  << _EOF_
 $( examplesSeperatorChapter "Specific Initial Repo Realizition" )
 $( examplesSeperatorSection "Repo Bases List And Create -- Realizition" )
-${G_myName} ${extraInfo} -i aais_repoBasesList
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_repoBasesAllCreate
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_repoBasesAllPush
-${G_myName} -i aais_repoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_repoBasesCreate aais
+${G_myName} ${extraInfo} -i pals_repoBasesList
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_repoBasesAllCreate
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_repoBasesAllPush
+${G_myName} -i pals_repoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_repoBasesCreate pals
 $( repoBaseCreateAndPushExamples panel "Panel Repo (Basic Panel)" )
 $( repoBaseCreateAndPushExamples BAGP "Repo" )
 $( repoBaseCreateAndPushExamples NSP "Repo" )
 $( repoBaseCreateAndPushExamples par_live "Repo" )
 $( examplesSeperatorSection "Non Repo Bases List And Create -- Realizition" )
-${G_myName} ${extraInfo} -i aais_nonRepoBasesList
-${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i aais_nonRepoBasesAllCreate
-${G_myName} -i aais_nonRepoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_nonRepoBasesCreate aais
+${G_myName} ${extraInfo} -i pals_nonRepoBasesList
+${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i pals_nonRepoBasesAllCreate
+${G_myName} -i pals_nonRepoBasesList | ${G_myName} ${extraInfo} -p bpoId="${oneBxoId}" -i bxoRealize_nonRepoBasesCreate pals
 $( nonRepoBaseCreateAndPushExamples var "Var BaseDir Link" )
 _EOF_
 

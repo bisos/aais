@@ -24,7 +24,7 @@ SEED="
 *  /[dblock]/ /Seed/ :: [[file:/bisos/core/bsip/bin/seedActions.bash]] |
 "
 FILE="
-*  /This File/ :: /bisos/git/auth/bxRepos/bisos/aais/bx/bin/bssA2GenewebManage.sh
+*  /This File/ :: /bisos/git/auth/bxRepos/bisos/pals/bx/bin/bssA2GenewebManage.sh
 "
 if [ "${loadFiles}" == "" ] ; then
     /bisos/core/bsip/bin/seedActions.bash -l $0 "$@"
@@ -113,7 +113,7 @@ typeset -t assignedUserIdNumber=""
 
 # PRE parameters
 typeset -t ss=""      # Services Specifications
-typeset -t bpoId=""   # aaisBpo
+typeset -t bpoId=""   # palsBpo
 
 function G_postParamHook {
     if [ ! -z "${bpoId}" ] ; then
@@ -145,7 +145,7 @@ function vis_examples {
 $( examplesSeperatorTopLabel "${G_myName}" )
 $( examplesSeperatorChapter "Full Actions" )
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i fullUpdate
-${G_myName} ${extraInfo} -p bpoId=aaisByDomain -p sr=${oneSr} -i fullUpdate
+${G_myName} ${extraInfo} -p bpoId=palsByDomain -p sr=${oneSr} -i fullUpdate
 $( examplesSeperatorChapter "Virtual Host Geneweb Apache2 CONFIG  (geneweb.xxx)" )
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomFileNameGet
 ${G_myName} ${extraInfo} -p bpoId=${oneBystarAcct} -p sr=${oneSr} -i srA2VirDomStdout

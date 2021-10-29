@@ -52,11 +52,11 @@ _EOF_
 
 . ${opBinBase}/opAcctLib.sh
 . ${opBinBase}/bystarLib.sh
-. ${aaisBinBase}/bystarBarc.libSh
+. ${palsBinBase}/bystarBarc.libSh
 . ${opBinBase}/opDoAtAsLib.sh
 
 . ${opBinBase}/bystarHook.libSh
-. ${aaisBinBase}/bystarNspLib.sh
+. ${palsBinBase}/bystarNspLib.sh
 
 # ./bystarPlatform.libSh
 # . ${opBinBase}/bystarPlatform.libSh
