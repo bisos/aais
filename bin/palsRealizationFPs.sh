@@ -112,10 +112,9 @@ typeset -t fqdnRoot=""
 typeset -t fpsRoot=""
 
 function G_postParamHook {
-    bpoIdPrepValidate    
-
     if [ ! -z "${bpoId}" ] ; then
         bpoHome=$( FN_absolutePathGet ~${bpoId} )
+        bpoIdPrepValidate
     fi
     
     bisosCurrentsGet
@@ -140,7 +139,7 @@ function vis_examples {
     typeset examplesInfo="${extraInfo} ${runInfo}"
 
     #oneBxoId="${currentBxoId}"
-    oneBxoId="pip_palsDevExamples"
+    oneBxoId="pip_aaisDevExamples"
 
     oneBxoRepoScope="basePrep"
 

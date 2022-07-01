@@ -111,9 +111,8 @@ typeset -t fpsBase=""
 
 
 function G_postParamHook {
-    bpoIdPrepValidate    
-
     if [ ! -z "${bpoId}" ] ; then
+        bpoIdPrepValidate
         bpoHome=$( FN_absolutePathGet ~${bpoId} )
     fi
     
@@ -140,12 +139,11 @@ function vis_examples {
 
     oneBxoRepoScope="basePrep"
 
-    local oneFpsBase=$(palsRealizationFPs.sh -p fpsRoot="~pip_palsDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
+    local oneFpsBase=$(palsRealizationFPs.sh -p fpsRoot="~pip_aaisDevExamples/realizationFPs" -p serviceType=ByDomain -p fqdnRoot=example.com -i realizationFPsProcess fpsBase)
 
-    local fpsBase="${oneFpsBase}"
-    local oneBxoId="$(vis_pals_assignAndGetBxoId)"
+    fpsBase="${oneFpsBase}"
+    local oneBxoId="$(vis_pals_assignAndGetBxoId)"    # Uses fpsBase
     local oneAssignBase=$(vis_pals_forFpsBaseFindAssignBase ${oneFpsBase})
-
 
     function repoBaseCreateAndPushExamples {
         EH_assert [[ $# -eq 2 ]]

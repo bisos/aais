@@ -512,7 +512,9 @@ _EOF_
    case "${paramName}" in
        fpsBase|serviceType|palsNu|palsId|palsBpoId)
            result=$(lpDo fileParamManage.py -i fileParamRead ${assignBase} "${paramName}")
-           EH_assert [ ! -z "${result}" ]
+           if [ -z "${result}" ] ; then
+               EH_problem "CMND FAILED: fileParamManage.py -i fileParamRead ${assignBase} ${paramName}"
+           fi
            ;;
        *)
            EH_problem "Bad Usage -- paramName=${paramName}"
